@@ -1,7 +1,7 @@
 {
-  "name": "express-sequelize-boilerplate",
+  "name": "comic-lovers-backend",
   "version": "0.0.1",
-  "description": "A boilerplate for Express with Sequelize",
+  "description": "Backend for Comic Lovers",
   "author": "Thays <thays.sn@hotmail.com>",
   "license": "MIT",
   "scripts": {
@@ -9,7 +9,8 @@
     "cook:npm": "git init && npm i && npm init",
     "lint": "yarn eslint ./",
     "lint:npm": "npx eslint ./",
-    "start": "nodemon ./src/server.js"
+    "start": "nodemon ./src/server.js",
+    "migrate": "yarn sequelize db:migrate"
   },
   "engines": {
     "node": "10.16.0",
@@ -31,13 +32,16 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.2",
     "pg": "^7.11.0",
     "pg-hstore": "^2.3.3",
     "sequelize": "^5.9.0",
+    "sharp": "^0.22.1",
     "yup": "^0.27.0"
   },
   "main": "./src/server.js",
-  "repository": "git@github.com:thayssn/express-sequelize-boilerplate.git"
+  "repository": "git@github.com:thayssn/backend-comiclovers.git"
 }

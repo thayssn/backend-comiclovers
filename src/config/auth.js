@@ -1,4 +1,7 @@
+require('dotenv').config();
+require('dotenv').config();
+
 export default {
-  secret: '',
+  secret: process.env.JWT_SECRET,
   expiresIn: '7d',
 };

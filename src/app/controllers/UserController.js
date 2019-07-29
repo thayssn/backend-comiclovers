@@ -1,4 +1,7 @@
 import * as Yup from 'yup';
+import path from 'path';
+import fs from 'fs';
+import sharp from 'sharp';
 import User from '../models/User';
 
 class UserController {
@@ -17,18 +20,34 @@ class UserController {
       return res.status(400).json({ error: 'Validation failed' });
     }
 
+    console.log(req.body);
+
     try {
       const userExists = await User.findOne({
         where: { email: req.body.email },
       });
       if (userExists) {
+        fs.unlinkSync(req.file.path);
         return res.status(400).json({ error: 'User already exists' });
       }
-      const { id, name, email } = await User.create(req.body);
+
+      const user = await User.create(req.body);
+
+      user.profile_picture = `${user.id}.png`;
+
+      await sharp(req.file.path)
+        .resize(200)
+        .jpeg({ quality: 70 })
+        .toFile(path.resolve(req.file.destination, user.profile_picture));
+
+      fs.unlinkSync(req.file.path);
+
+      user.save();
+
       return res.status(201).json({
-        id,
-        name,
-        email,
+        id: user.id,
+        name: user.name,
+        email: user.email,
       });
     } catch (err) {
       return res

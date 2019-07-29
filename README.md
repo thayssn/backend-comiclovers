@@ -15,3 +15,15 @@ yarn cook
 ```
 yarn start
 ```
+
+
+## Database
+
+run postgres with docker
+```
+docker-compose up
+```
+migrate the database
+```
+yarn sequelize db:migrate
+```
