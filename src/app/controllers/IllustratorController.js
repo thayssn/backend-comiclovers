@@ -38,6 +38,7 @@ class IllustratorController {
       }
 
       const illustrator = await Illustrator.create(req.body);
+
       return res.status(201).json(illustrator);
     } catch (err) {
       return res.status(400).json({ error: 'Error creating illustrator' });

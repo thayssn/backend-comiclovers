@@ -5,8 +5,9 @@ import Illustrator from '../app/models/Illustrator';
 import Writer from '../app/models/Writer';
 import Licensor from '../app/models/Licensor';
 import Publisher from '../app/models/Publisher';
+import Book from '../app/models/Book';
 
-const models = [User, Illustrator, Writer, Licensor, Publisher];
+const models = [User, Illustrator, Writer, Licensor, Publisher, Book];
 class Database {
   constructor() {
     this.init();
@@ -14,7 +15,9 @@ class Database {
 
   init() {
     this.connection = new Sequelize(databaseConfig);
-    models.map(model => model.init(this.connection));
+    models
+      .map(model => model.init(this.connection))
+      .map(model => model.associate && model.associate(this.connection.models));
   }
 }
 

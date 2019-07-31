@@ -5,6 +5,7 @@ import IllustratorController from './app/controllers/IllustratorController';
 import PublisherController from './app/controllers/PublisherController';
 import WriterController from './app/controllers/WriterController';
 import LicensorController from './app/controllers/LicensorController';
+import BookController from './app/controllers/BookController';
 
 import authMiddleware from './app/middlewares/auth';
 import uploadMiddleware from './app/middlewares/upload';
@@ -39,6 +40,10 @@ routes.get(`${API_BASE_URL}/illustrators`, IllustratorController.list);
 routes.get(`${API_BASE_URL}/illustrators/:id`, IllustratorController.show);
 routes.put(`${API_BASE_URL}/illustrators/:id`, IllustratorController.update);
 routes.delete(`${API_BASE_URL}/illustrators/:id`, IllustratorController.remove);
+
+/* ILLUSTRATOR ROUTES */
+routes.post(`${API_BASE_URL}/books`, BookController.store);
+routes.get(`${API_BASE_URL}/books`, BookController.list);
 
 /* USER ROUTES */
 routes.post(

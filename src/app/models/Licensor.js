@@ -13,6 +13,10 @@ class Licensor extends Model {
 
     return this;
   }
+
+  static associate(models) {
+    Licensor.belongsToMany(models.Book, { through: 'book_licensors' });
+  }
 }
 
 export default Licensor;

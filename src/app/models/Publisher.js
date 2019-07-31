@@ -13,6 +13,10 @@ class Publisher extends Model {
 
     return this;
   }
+
+  static associate(models) {
+    Publisher.belongsToMany(models.Book, { through: 'book_publishers' });
+  }
 }
 
 export default Publisher;

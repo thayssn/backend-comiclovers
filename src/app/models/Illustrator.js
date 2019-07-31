@@ -13,6 +13,12 @@ class Illustrator extends Model {
 
     return this;
   }
+
+  static associate(models) {
+    Illustrator.belongsToMany(models.Book, {
+      through: 'book_illustrators',
+    });
+  }
 }
 
 export default Illustrator;

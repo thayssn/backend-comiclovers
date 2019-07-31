@@ -13,6 +13,10 @@ class Writer extends Model {
 
     return this;
   }
+
+  static associate(models) {
+    Writer.belongsToMany(models.Book, { through: 'book_writers' });
+  }
 }
 
 export default Writer;
