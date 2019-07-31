@@ -14,9 +14,10 @@ routes.post(
   UserController.store
 );
 routes.post(`${API_BASE_URL}/auth`, AuthController.store);
-routes.get(`${API_BASE_URL}/users/:id`, UserController.show);
 
 routes.use(authMiddleware);
+routes.get(`${API_BASE_URL}/users/`, UserController.list);
+routes.get(`${API_BASE_URL}/me/`, UserController.show);
 routes.put(`${API_BASE_URL}/users`, UserController.update);
 routes.delete(`${API_BASE_URL}/users`, UserController.remove);
 

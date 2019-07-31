@@ -20,8 +20,6 @@ class UserController {
       return res.status(400).json({ error: 'Validation failed' });
     }
 
-    console.log(req.body);
-
     try {
       const userExists = await User.findOne({
         where: { email: req.body.email },
@@ -103,11 +101,9 @@ class UserController {
   }
 
   async show(req, res) {
-    const { id } = req.params;
-
     try {
-      const { name, email } = await User.findByPk(id);
-      return res.status(200).json({ name, email });
+      const { name, profile_picture } = await User.findByPk(req.userId);
+      return res.status(200).json({ name, profile_picture });
     } catch (err) {
       return res.status(404).json({ error: 'User not found' });
     }
@@ -118,6 +114,15 @@ class UserController {
       const user = await User.findByPk(req.userId);
       await User.destroy({ where: { id: user.id } });
       return res.status(200).json({ success: 'User deleted' });
+    } catch (err) {
+      return res.status(400).json({ error: 'An error occurred' });
+    }
+  }
+
+  async list(req, res) {
+    try {
+      const users = await User.findAll();
+      return res.status(200).json(users);
     } catch (err) {
       return res.status(400).json({ error: 'An error occurred' });
     }
