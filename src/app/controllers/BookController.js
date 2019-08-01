@@ -28,30 +28,29 @@ class BookController {
     const { id } = req.params;
     try {
       const book = await Book.findByPk(id, {
-        attributes: bookAttributes,
         include: [
           {
             model: Illustrator,
             as: 'illustrators',
-            attributes: ['id', 'name'],
+            attributes: ['name'],
             through: { attributes: [] },
           },
           {
             model: Writer,
             as: 'writers',
-            attributes: ['id', 'name'],
+            attributes: ['name'],
             through: { attributes: [] },
           },
           {
             model: Publisher,
             as: 'publishers',
-            attributes: ['id', 'name'],
+            attributes: ['name'],
             through: { attributes: [] },
           },
           {
             model: Licensor,
             as: 'licensors',
-            attributes: ['id', 'name'],
+            attributes: ['name'],
             through: { attributes: [] },
           },
         ],
