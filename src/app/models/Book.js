@@ -20,10 +20,10 @@ class Book extends Model {
           type: Sequelize.INTEGER,
         },
         description: {
-          type: Sequelize.TEXT,
+          type: Sequelize.TEXT('long'),
         },
         publishing_date: {
-          type: Sequelize.STRING,
+          type: Sequelize.DATE,
         },
         format: {
           type: Sequelize.STRING,
@@ -35,12 +35,9 @@ class Book extends Model {
           type: Sequelize.STRING,
         },
         total_rating: {
-          type: Sequelize.STRING,
-        },
-        total_favorites: {
           type: Sequelize.INTEGER,
         },
-        total_readings: {
+        total_favorites: {
           type: Sequelize.INTEGER,
         },
       },

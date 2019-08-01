@@ -10,5 +10,7 @@ module.exports = {
     timestamp: true,
     underscored: true,
     underscoredAll: true,
+    charset: 'utf8',
+    collate: 'utf8_general_ci',
   },
 };

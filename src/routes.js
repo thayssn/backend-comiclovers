@@ -44,6 +44,9 @@ routes.delete(`${API_BASE_URL}/illustrators/:id`, IllustratorController.remove);
 /* ILLUSTRATOR ROUTES */
 routes.post(`${API_BASE_URL}/books`, BookController.store);
 routes.get(`${API_BASE_URL}/books`, BookController.list);
+routes.get(`${API_BASE_URL}/books/:id`, BookController.show);
+routes.put(`${API_BASE_URL}/books/:id`, BookController.update);
+routes.delete(`${API_BASE_URL}/books/:id`, BookController.remove);
 
 /* USER ROUTES */
 routes.post(
