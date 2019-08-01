@@ -1,10 +1,13 @@
+import sharp from 'sharp';
+import fs from 'fs';
+import path from 'path';
 import Book from '../models/Book';
 import Illustrator from '../models/Illustrator';
 import Writer from '../models/Writer';
 import Publisher from '../models/Publisher';
 import Licensor from '../models/Licensor';
 
-const bookAttributes = ['id', 'title', 'isbn'];
+const bookAttributes = ['id', 'title', 'isbn', 'thumbnail'];
 
 class BookController {
   async list(req, res) {
@@ -64,9 +67,11 @@ class BookController {
   }
 
   async store(req, res) {
+    const body = JSON.parse(req.body.jsonPayload);
+
     try {
       const bookExists = await Book.findOne({
-        where: { isbn: req.body.isbn },
+        where: { isbn: body.isbn },
       });
 
       if (bookExists) {
@@ -75,14 +80,28 @@ class BookController {
         });
       }
 
-      const book = await Book.create(req.body);
+      const book = await Book.create(body);
 
-      await book.addIllustrator(req.body.illustrators);
-      await book.addWriter(req.body.writers);
-      await book.addPublisher(req.body.publishers);
-      await book.addLicensor(req.body.licensors);
+      await book.addIllustrator(body.illustrators);
+      await book.addWriter(body.writers);
+      await book.addPublisher(body.publishers);
+      await book.addLicensor(body.licensors);
+      if (req.file) {
+        book.thumbnail = `${book.isbn}.png`;
 
-      return res.status(201).json({ success: true });
+        await sharp(req.file.path)
+          .resize(200)
+          .jpeg({ quality: 70 })
+          .toFile(path.resolve(req.file.destination, book.thumbnail));
+        fs.unlinkSync(req.file.path);
+
+        book.save();
+      }
+
+      return res.status(201).json({
+        success: true,
+        book: { id: book.id, title: book.title, isbn: book.isbn },
+      });
     } catch (err) {
       console.log(err);
       return res.status(400).json({ error: 'Error creating book' });
@@ -123,6 +142,7 @@ class BookController {
       await Book.destroy({ where: { id } });
       return res.status(200).json({ success: 'Book deleted' });
     } catch (err) {
+      console.log(err);
       return res.status(400).json({ error: 'An error occurred' });
     }
   }

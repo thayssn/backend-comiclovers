@@ -4,7 +4,6 @@ module.exports = {
       'books',
       [
         {
-          id: 1,
           isbn: '9788573517941',
           title: 'Batman - Ano Um',
           edition: null,
@@ -26,7 +25,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 2,
           isbn: '8573516976',
           title: 'One Piece',
           edition: '1',
@@ -48,7 +46,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 3,
           isbn: '9788573516531',
           title: 'Sandman',
           edition: '1',
@@ -65,7 +62,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 4,
           isbn: '9788583681403',
           title: 'V de vingan\u00e7a',
           edition: null,
@@ -82,7 +78,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 5,
           isbn: '8573518847',
           title: 'One Piece',
           edition: '2',
@@ -99,7 +94,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 6,
           isbn: '9788573518931',
           title: 'One Piece',
           edition: '3',
@@ -116,7 +110,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 7,
           isbn: '9788573515473',
           title: 'Batman - A Piada Mortal',
           edition: null,
@@ -133,7 +126,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 8,
           isbn: '9788573519037',
           title: 'One Piece',
           edition: '4',
@@ -150,7 +142,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 9,
           isbn: '9788573519105',
           title: 'One Piece',
           edition: '5',
@@ -167,7 +158,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 10,
           isbn: '9788565484015',
           title: 'Batman - O Filho do Dem\u00f4nio',
           edition: null,
@@ -184,7 +174,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 11,
           isbn: '9788573519259',
           title: 'One Piece',
           edition: '6',
@@ -201,7 +190,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 12,
           isbn: '9788565484497',
           title: 'Superman - O Que Aconteceu Ao Homem de A\u00e7o?',
           edition: null,
@@ -218,7 +206,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 13,
           isbn: '9788535906288',
           title: 'Maus',
           edition: null,
@@ -235,7 +222,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 14,
           isbn: '9788573519402',
           title: 'One Piece',
           edition: '8',
@@ -252,7 +238,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 15,
           isbn: '9781401220839',
           title: 'Saga do Monstro do P\u00e2ntano',
           edition: '1',
@@ -269,7 +254,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 16,
           isbn: '9788565484343',
           title: 'Batman - O Que Aconteceu Ao Cavaleiro das Trevas?',
           edition: null,
@@ -286,7 +270,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 17,
           isbn: '9788573516906',
           title: 'Guerra Civil',
           edition: null,
@@ -303,7 +286,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 18,
           isbn: '789765352158602',
           title: 'Saga do Monstro do P\u00e2ntano',
           edition: '2',
@@ -320,7 +302,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 19,
           isbn: '9788573519990',
           title: 'One Piece',
           edition: '14',
@@ -337,7 +318,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 20,
           isbn: '9788542600018',
           title: 'One Piece',
           edition: '15',
@@ -354,7 +334,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 21,
           isbn: '9788542600322',
           title: 'One Piece',
           edition: '16',
@@ -371,7 +350,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 22,
           isbn: '9788583680758',
           title: 'Demolidor Por Frank Miller & Klaus Janson',
           edition: '1',
@@ -388,7 +366,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 23,
           isbn: '9788573515466',
           title: 'Coringa',
           edition: null,
@@ -405,7 +382,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 24,
           isbn: '9788565484060',
           title: 'Grandes Astros Superman',
           edition: null,
@@ -422,7 +398,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 25,
           isbn: '789765352158603',
           title: 'Saga do Monstro do P\u00e2ntano',
           edition: '3',
@@ -439,7 +414,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 26,
           isbn: '9788565484008',
           title: 'Preacher',
           edition: '1',
@@ -456,7 +430,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 27,
           isbn: '9788573513769',
           title: 'Batman - O Cavaleiro das Trevas',
           edition: null,
@@ -473,7 +446,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 28,
           isbn: '9788583680659',
           title: 'Batman - A Corte das Corujas',
           edition: null,
@@ -490,7 +462,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 29,
           isbn: '789765352158604',
           title: 'Saga do Monstro do P\u00e2ntano',
           edition: '4',
@@ -507,7 +478,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 30,
           isbn: '9788542600513',
           title: 'One Piece',
           edition: '20',
@@ -524,7 +494,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 31,
           isbn: '9788583680697',
           title: 'X-Men: Deus Ama, O Homem Mata',
           edition: null,
@@ -541,7 +510,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 32,
           isbn: '789765352629101',
           title: '20th Century Boys',
           edition: '1',
@@ -558,7 +526,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 33,
           isbn: '9788583681106',
           title: 'Revelado',
           edition: '1',
@@ -575,7 +542,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 34,
           isbn: '9788583680901',
           title: 'Aquaman',
           edition: null,
@@ -592,7 +558,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 35,
           isbn: '9788565484701',
           title: 'Batman',
           edition: '1',
@@ -609,7 +574,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 36,
           isbn: '19',
           title: 'Demolidor',
           edition: '1',
@@ -626,7 +590,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 37,
           isbn: '9788565484671',
           title: 'Justiceiro Max',
           edition: null,
@@ -643,7 +606,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 38,
           isbn: '9788583680321',
           title: 'Batman',
           edition: null,
@@ -660,7 +622,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 39,
           isbn: '9788573516630',
           title: 'Kick-Ass',
           edition: '1',
@@ -677,7 +638,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 40,
           isbn: '9788565484770',
           title: 'Surfista Prateado',
           edition: null,
@@ -694,7 +654,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 41,
           isbn: '9788565484572',
           title: 'Turma da M\u00f4nica: La\u00e7os',
           edition: '2',
@@ -711,7 +670,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 42,
           isbn: '9788583681052',
           title: 'Gotham. DPGC. No Cumprimento do Dever',
           edition: '1',
@@ -728,7 +686,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 43,
           isbn: '9788583681632',
           title: 'Gotham - Alvos F\u00e1ceis',
           edition: '2',
@@ -745,7 +702,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 44,
           isbn: '9788583681953',
           title: 'Gotham DPGC - Sob Suspeita - Volume 1',
           edition: '3',
@@ -762,7 +718,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 45,
           isbn: '9788583682264',
           title: 'Providence',
           edition: null,
@@ -779,7 +734,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 46,
           isbn: '9788545702870',
           title: 'AKIRA',
           edition: '1',
@@ -796,7 +750,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 47,
           isbn: '9788545702320',
           title: 'The Ghost in the Shell',
           edition: null,
@@ -813,7 +766,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 48,
           isbn: '9788550402796',
           title: 'Valerian Integral',
           edition: '1',
@@ -830,7 +782,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 49,
           isbn: '9788550404134',
           title: 'Valerian Integral',
           edition: '2',
@@ -847,7 +798,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 50,
           isbn: '9788583681915',
           title: 'Skreemer',
           edition: null,
@@ -864,7 +814,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 51,
           isbn: '9788575321669',
           title: 'Preacher - A Caminho do Texas',
           edition: '1',
@@ -895,7 +844,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 52,
           isbn: '9788565484299',
           title: 'Preacher - At\u00e9 o Fim do Mundo',
           edition: '2',
@@ -912,7 +860,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 53,
           isbn: '9788565484565',
           title: 'Preacher - Orgulho Americano',
           edition: '3',
@@ -929,7 +876,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 54,
           isbn: '9788565484749',
           title: 'Preacher - Hist\u00f3rias Antigas',
           edition: '4',
@@ -946,7 +892,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 55,
           isbn: '9788573515497',
           title: 'Watchmen',
           edition: null,
@@ -963,7 +908,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 56,
           isbn: '9788565484640',
           title: 'Reino do Amanh\u00e3',
           edition: null,
@@ -980,7 +924,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 57,
           isbn: '9788583680796',
           title: 'Preacher - Rumo ao Sul',
           edition: '5',
@@ -997,7 +940,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 58,
           isbn: '9788583680741',
           title: 'Preacher - Guerra ao Sol',
           edition: '6',
@@ -1014,7 +956,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 59,
           isbn: '9788573519273',
           title: 'One Piece',
           edition: '7',
@@ -1031,7 +972,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 60,
           isbn: '9788573516357',
           title: 'Preacher - Salva\u00e7\u00e3o',
           edition: '7',
@@ -1048,7 +988,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 61,
           isbn: '9788573516999',
           title: 'Preacher - \u00c0s Portas do Inferno',
           edition: '8',
@@ -1065,7 +1004,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 62,
           isbn: '9788573517699',
           title: 'Preacher - \u00c1lamo',
           edition: '9',
@@ -1082,7 +1020,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 63,
           isbn: '9788583680499',
           title: 'Y - O \u00daltimo Homem',
           edition: '1',
@@ -1099,7 +1036,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 64,
           isbn: '9788583681489',
           title: 'Y: O \u00daltimo Homem',
           edition: '2',
@@ -1116,7 +1052,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 65,
           isbn: '9788583681809',
           title: 'Y: O \u00daltimo Homem',
           edition: '3',
@@ -1133,7 +1068,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 66,
           isbn: '9788575326367',
           title: 'Saga',
           edition: '1',
@@ -1150,7 +1084,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 67,
           isbn: '9788575326183',
           title: 'Saga',
           edition: '2',
@@ -1167,7 +1100,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 68,
           isbn: '9788575326398',
           title: 'Saga',
           edition: '3',
@@ -1184,7 +1116,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 69,
           isbn: '9788575326473',
           title: 'Saga',
           edition: '4',
@@ -1201,7 +1132,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 70,
           isbn: '9788575326541',
           title: 'Saga',
           edition: '5',
@@ -1218,7 +1148,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 71,
           isbn: '9788573516050',
           title: 'terra x',
           edition: null,
@@ -1235,7 +1164,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          id: 72,
           isbn: '9788573514070',
           title: 'Os Maiores Super-Her\u00f3is do Mundo',
           edition: null,
