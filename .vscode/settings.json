@@ -12,5 +12,5 @@
       "autoFix": true
     }
   ],
-  "editor.maxTokenizationLineLength": 60000
+  "editor.maxTokenizationLineLength": 80000
 }

@@ -6,7 +6,7 @@ import PublisherController from './app/controllers/PublisherController';
 import WriterController from './app/controllers/WriterController';
 import LicensorController from './app/controllers/LicensorController';
 import BookController from './app/controllers/BookController';
-
+import BulkInsertController from './app/controllers/BulkInsertController';
 import authMiddleware from './app/middlewares/auth';
 import uploadMiddleware from './app/middlewares/upload';
 
@@ -51,6 +51,8 @@ routes.get(`${API_BASE_URL}/books`, BookController.list);
 routes.get(`${API_BASE_URL}/books/:id`, BookController.show);
 routes.put(`${API_BASE_URL}/books/:id`, BookController.update);
 routes.delete(`${API_BASE_URL}/books/:id`, BookController.remove);
+
+routes.post(`${API_BASE_URL}/books/bulk`, BulkInsertController.bulkStore);
 
 /* USER ROUTES */
 routes.post(
