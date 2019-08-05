@@ -18,7 +18,7 @@ class BulkInsertController {
     const books = await loadJson();
 
     try {
-      const result = books.map(async data => {
+      const result = await books.map(async data => {
         const book = await Book.create(data);
 
         const bookIllustrators = await data.illustrators.map(
@@ -54,6 +54,7 @@ class BulkInsertController {
         book.addPublishers(await Promise.all(bookPublishers));
 
         const bookLicensors = await data.licensors.map(async licensor => {
+          console.log(licensor.name);
           const [resultLicensor] = await Licensor.findOrCreate({
             where: { name: licensor.name },
             defaults: { name: licensor.name },
@@ -61,36 +62,12 @@ class BulkInsertController {
           return resultLicensor.id;
         });
 
-        const resultLicensors = await Promise.all(bookLicensors);
-        console.log(resultLicensors);
-        book.addLicensors(resultLicensors);
+        book.addLicensors(await Promise.all(bookLicensors));
+
+        return book;
       });
 
-      // const booksPromises = books.map(data => {
-      //   return Book.create(data, {
-      //     // include: [
-      //     //   {
-      //     //     model: Illustrator,
-      //     //     as: 'illustrators',
-      //     //   },
-      //     //   {
-      //     //     model: Publisher,
-      //     //     as: 'publishers',
-      //     //   },
-      //     //   {
-      //     //     model: Writer,
-      //     //     as: 'writers',
-      //     //   },
-      //     //   {
-      //     //     model: Licensor,
-      //     //     as: 'licensors',
-      //     //   },
-      //     // ],
-      //   });
-      // });
-
-      // const result = await Promise.all(booksPromises);
-      return res.status(201).json(result);
+      return res.status(201).json(await Promise.all(result));
     } catch (err) {
       console.log(err);
       return res.status(400).json({ error: 'Problem with bulk creation' });
