@@ -65,6 +65,10 @@ class Book extends Model {
       through: 'book_publishers',
       as: 'publishers',
     });
+    Book.belongsToMany(models.Collection, {
+      through: 'collection_books',
+      as: 'collections',
+    });
   }
 }
 

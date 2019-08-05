@@ -6,8 +6,17 @@ import Writer from '../app/models/Writer';
 import Licensor from '../app/models/Licensor';
 import Publisher from '../app/models/Publisher';
 import Book from '../app/models/Book';
+import Collection from '../app/models/Collection';
 
-const models = [User, Illustrator, Writer, Licensor, Publisher, Book];
+const models = [
+  User,
+  Illustrator,
+  Writer,
+  Licensor,
+  Publisher,
+  Book,
+  Collection,
+];
 class Database {
   constructor() {
     this.init();

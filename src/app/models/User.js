@@ -25,6 +25,12 @@ class User extends Model {
     return this;
   }
 
+  static associate(models) {
+    User.hasMany(models.Collection, {
+      as: 'collections',
+    });
+  }
+
   verifyPassword(password) {
     return bcrypt.compare(password, this.password_hash);
   }
