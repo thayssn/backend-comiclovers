@@ -28,6 +28,18 @@ class BookController {
     const { id } = req.params;
     try {
       const book = await Book.findByPk(id, {
+        attributes: [
+          'id',
+          'title',
+          'description',
+          'edition',
+          'pages',
+          'price',
+          'thumbnail',
+          'format',
+          'total_rating',
+          'publishing_date',
+        ],
         include: [
           {
             model: Illustrator,
@@ -81,10 +93,11 @@ class BookController {
 
       const book = await Book.create(body);
 
-      await book.addIllustrator(body.illustrators);
-      await book.addWriter(body.writers);
-      await book.addPublisher(body.publishers);
-      await book.addLicensor(body.licensors);
+      await book.setIllustrators(body.illustrators);
+      await book.setWriters(body.writers);
+      await book.setPublishers(body.publishers);
+      await book.setLicensors(body.licensors);
+
       if (req.file) {
         book.thumbnail = `${book.isbn}.png`;
 
@@ -109,6 +122,7 @@ class BookController {
 
   async update(req, res) {
     const { id } = req.params;
+    const { body } = req;
     try {
       const book = await Book.findByPk(id);
 
@@ -116,17 +130,34 @@ class BookController {
         res.status(404).json({ error: 'Book not found' });
       }
 
-      const bookExists = await Book.findOne({
-        where: { isbn: req.body.isbn },
-      });
-
-      if (bookExists) {
-        return res.status(400).json({
-          error: `book already exists`,
+      if (body.isbn) {
+        const bookExists = await Book.findOne({
+          where: { isbn: body.isbn },
         });
+
+        if (bookExists) {
+          return res.status(400).json({
+            error: `book already exists`,
+          });
+        }
       }
 
-      await book.update(req.body);
+      await book.update(body);
+
+      await book.setIllustrators(body.illustrators);
+      await book.setWriters(body.writers);
+      await book.setLicensors(body.licensors);
+      await book.setPublishers(body.publishers);
+
+      if (req.file) {
+        book.thumbnail = `${book.isbn}.png`;
+
+        await sharp(req.file.path)
+          .resize(200)
+          .jpeg({ quality: 70 })
+          .toFile(path.resolve(req.file.destination, book.thumbnail));
+        fs.unlinkSync(req.file.path);
+      }
 
       return res.status(200).json(book);
     } catch (err) {
