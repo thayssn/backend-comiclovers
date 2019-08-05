@@ -13,21 +13,21 @@ import uploadMiddleware from './app/middlewares/upload';
 const routes = new Router();
 const API_BASE_URL = '/api';
 
-/* ILLUSTRATOR ROUTES */
+/* PUBLISHERS ROUTES */
 routes.post(`${API_BASE_URL}/publishers`, PublisherController.store);
 routes.get(`${API_BASE_URL}/publishers`, PublisherController.list);
 routes.get(`${API_BASE_URL}/publishers/:id`, PublisherController.show);
 routes.put(`${API_BASE_URL}/publishers/:id`, PublisherController.update);
 routes.delete(`${API_BASE_URL}/publishers/:id`, PublisherController.remove);
 
-/* ILLUSTRATOR ROUTES */
+/* WRITERS ROUTES */
 routes.post(`${API_BASE_URL}/writers`, WriterController.store);
 routes.get(`${API_BASE_URL}/writers`, WriterController.list);
 routes.get(`${API_BASE_URL}/writers/:id`, WriterController.show);
 routes.put(`${API_BASE_URL}/writers/:id`, WriterController.update);
 routes.delete(`${API_BASE_URL}/writers/:id`, WriterController.remove);
 
-/* ILLUSTRATOR ROUTES */
+/* LICENSORS ROUTES */
 routes.post(`${API_BASE_URL}/licensors`, LicensorController.store);
 routes.get(`${API_BASE_URL}/licensors`, LicensorController.list);
 routes.get(`${API_BASE_URL}/licensors/:id`, LicensorController.show);
@@ -41,7 +41,7 @@ routes.get(`${API_BASE_URL}/illustrators/:id`, IllustratorController.show);
 routes.put(`${API_BASE_URL}/illustrators/:id`, IllustratorController.update);
 routes.delete(`${API_BASE_URL}/illustrators/:id`, IllustratorController.remove);
 
-/* ILLUSTRATOR ROUTES */
+/* BOOKS ROUTES */
 routes.post(
   `${API_BASE_URL}/books`,
   uploadMiddleware('book_covers', 'image'),
