@@ -8,6 +8,7 @@ import LicensorController from './app/controllers/LicensorController';
 import BookController from './app/controllers/BookController';
 import BulkInsertController from './app/controllers/BulkInsertController';
 import UserCollectionController from './app/controllers/UserCollectionController';
+import CollectionBooksController from './app/controllers/CollectionBooksController';
 
 import authMiddleware from './app/middlewares/auth';
 import uploadMiddleware from './app/middlewares/upload';
@@ -71,19 +72,25 @@ routes.delete(`${API_BASE_URL}/me`, UserController.remove);
 
 /* USER COLLECTION */
 routes.post(
-  `${API_BASE_URL}/me/collections/`,
+  `${API_BASE_URL}/collections/`,
   uploadMiddleware('collection_covers', 'image'),
   UserCollectionController.store
 );
-routes.get(`${API_BASE_URL}/me/collections/`, UserCollectionController.list);
-routes.get(`${API_BASE_URL}/me/collections/:id`, UserCollectionController.show);
-routes.put(
-  `${API_BASE_URL}/me/collections/:id`,
-  UserCollectionController.update
-);
+routes.get(`${API_BASE_URL}/collections/`, UserCollectionController.list);
+routes.get(`${API_BASE_URL}/collections/:id`, UserCollectionController.show);
+routes.put(`${API_BASE_URL}/collections/:id`, UserCollectionController.update);
 routes.delete(
-  `${API_BASE_URL}/me/collections/:id`,
+  `${API_BASE_URL}/collections/:id`,
   UserCollectionController.remove
 );
 
+/* COLLECTION BOOKS */
+routes.post(
+  `${API_BASE_URL}/collections/:id/books`,
+  CollectionBooksController.store
+);
+routes.delete(
+  `${API_BASE_URL}/collections/:id/books/`,
+  CollectionBooksController.remove
+);
 module.exports = routes;
