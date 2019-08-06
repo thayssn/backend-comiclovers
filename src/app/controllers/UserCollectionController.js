@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import Collection from '../models/Collection';
 import User from '../models/User';
+import Book from '../models/Book';
 
 class UserCollectionController {
   async store(req, res) {
@@ -20,7 +21,7 @@ class UserCollectionController {
       });
       const collection = await Collection.create({
         ...body,
-        user_id: req.userIds,
+        user_id: req.userId,
       });
 
       if (req.file) {
@@ -38,8 +39,7 @@ class UserCollectionController {
       await user.addCollection(collection);
 
       return res.status(201).json({
-        success: true,
-        user,
+        collection,
       });
     } catch (err) {
       console.log(err);
@@ -52,7 +52,7 @@ class UserCollectionController {
       const user = await User.findByPk(req.userId);
 
       const userCollections = await user.getCollections({
-        attributes: ['title', 'thumbnail'],
+        attributes: ['id', 'title', 'thumbnail'],
       });
 
       return res.status(200).json(userCollections);
@@ -70,6 +70,15 @@ class UserCollectionController {
         where: {
           id: req.params.id,
           user_id: user.id,
+        },
+        attributes: ['id', 'title', 'thumbnail'],
+        include: {
+          model: Book,
+          as: 'books',
+          attributes: ['id', 'title', 'thumbnail'],
+          through: {
+            attributes: [],
+          },
         },
       });
 
