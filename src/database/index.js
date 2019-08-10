@@ -7,6 +7,7 @@ import Licensor from '../app/models/Licensor';
 import Publisher from '../app/models/Publisher';
 import Book from '../app/models/Book';
 import Collection from '../app/models/Collection';
+import Review from '../app/models/Review';
 
 const models = [
   User,
@@ -16,6 +17,7 @@ const models = [
   Publisher,
   Book,
   Collection,
+  Review,
 ];
 class Database {
   constructor() {

@@ -12,6 +12,7 @@ import CollectionBooksController from './app/controllers/CollectionBooksControll
 
 import authMiddleware from './app/middlewares/auth';
 import uploadMiddleware from './app/middlewares/upload';
+import ReviewController from './app/controllers/ReviewController';
 
 const routes = new Router();
 const API_BASE_URL = '/api';
@@ -93,4 +94,7 @@ routes.delete(
   `${API_BASE_URL}/collections/:id/books/`,
   CollectionBooksController.remove
 );
+
+routes.post(`${API_BASE_URL}/books/:id/review`, ReviewController.store);
+routes.put(`${API_BASE_URL}/books/:id/review`, ReviewController.update);
 module.exports = routes;

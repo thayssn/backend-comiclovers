@@ -69,6 +69,9 @@ class Book extends Model {
       through: 'collection_books',
       as: 'collections',
     });
+    Book.hasMany(models.Review, {
+      as: 'reviews',
+    });
   }
 }
 

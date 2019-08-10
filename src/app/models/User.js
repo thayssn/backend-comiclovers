@@ -29,6 +29,10 @@ class User extends Model {
     User.hasMany(models.Collection, {
       as: 'collections',
     });
+
+    User.hasMany(models.Review, {
+      as: 'reviews',
+    });
   }
 
   verifyPassword(password) {
