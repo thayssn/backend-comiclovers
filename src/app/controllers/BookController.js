@@ -77,6 +77,25 @@ class BookController {
     }
   }
 
+  async showByISBN(req, res) {
+    const { isbn } = req.body;
+    try {
+      const book = await Book.findOne({
+        where: {
+          isbn,
+        },
+        attributes: ['id'],
+      });
+
+      if (!book) {
+        return res.status(404).json({ error: 'Book not found' });
+      }
+      return res.status(200).json(book);
+    } catch (err) {
+      return res.status(400).json({ error: 'Error trying to find book' });
+    }
+  }
+
   async store(req, res) {
     const body = JSON.parse(req.body.jsonPayload);
 

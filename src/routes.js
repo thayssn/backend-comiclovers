@@ -51,8 +51,9 @@ routes.post(
   uploadMiddleware('book_covers', 'image'),
   BookController.store
 );
-routes.get(`${API_BASE_URL}/books`, BookController.list);
+routes.get(`${API_BASE_URL}/books/`, BookController.list);
 routes.get(`${API_BASE_URL}/books/:id`, BookController.show);
+routes.get(`${API_BASE_URL}/books/`, BookController.showByISBN);
 routes.put(`${API_BASE_URL}/books/:id`, BookController.update);
 routes.delete(`${API_BASE_URL}/books/:id`, BookController.remove);
 
@@ -96,5 +97,4 @@ routes.delete(
 );
 
 routes.post(`${API_BASE_URL}/books/:id/review`, ReviewController.store);
-routes.put(`${API_BASE_URL}/books/:id/review`, ReviewController.update);
 module.exports = routes;

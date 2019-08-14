@@ -13,5 +13,12 @@ services:
     ports:
       - "5432:5432"
 
+  api:
+    image: comiclovers-api
+    depends_on:
+      - db
+    ports:
+      - "3333:3333"
+
 volumes:
   database:

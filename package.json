@@ -13,9 +13,9 @@
     "migrate": "yarn sequelize db:migrate"
   },
   "engines": {
-    "node": "10.16.0",
+    "node": "10",
     "npm": "6.9.0",
-    "yarn": "1.17.0"
+    "yarn": "1.17"
   },
   "engineStrict": true,
   "devDependencies": {

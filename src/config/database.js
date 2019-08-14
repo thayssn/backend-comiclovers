@@ -2,10 +2,11 @@ require('dotenv').config();
 
 module.exports = {
   dialect: 'postgres',
-  host: 'localhost',
+  host: 'db',
   username: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DB,
+  logging: false,
   define: {
     timestamp: true,
     underscored: true,
