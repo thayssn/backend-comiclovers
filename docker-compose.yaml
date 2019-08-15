@@ -14,7 +14,7 @@ services:
       - "5432:5432"
 
   api:
-    image: comiclovers-api
+    build: .
     depends_on:
       - db
     ports:

@@ -7,13 +7,30 @@ import Writer from '../models/Writer';
 import Publisher from '../models/Publisher';
 import Licensor from '../models/Licensor';
 
-const bookAttributes = ['id', 'title', 'isbn', 'thumbnail'];
-
 class BookController {
   async list(req, res) {
     try {
       const books = await Book.findAll({
-        attributes: bookAttributes,
+        attributes: [
+          'id',
+          'title',
+          'description',
+          'edition',
+          'pages',
+          'price',
+          'thumbnail',
+          'format',
+          'total_rating',
+          'publishing_date',
+        ],
+        include: [
+          {
+            model: Licensor,
+            as: 'licensors',
+            attributes: ['name'],
+            through: { attributes: [] },
+          },
+        ],
       });
       if (!books.length) {
         return res.status(404).json({ error: 'No books found' });

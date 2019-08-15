@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 import routes from './routes';
 import './database';
 
@@ -10,6 +11,10 @@ class App {
   }
 
   middlewares() {
+    this.server.use(
+      '/static/covers',
+      express.static(path.join(__dirname, '..', 'media', 'book_covers'))
+    );
     this.server.use(express.json());
   }
 
