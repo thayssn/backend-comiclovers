@@ -12,8 +12,6 @@ class ReviewController {
         return res.status(404).json({ error: 'Book not found' });
       }
 
-      console.log(req.userId);
-
       const [review, wasCreated] = await Review.findOrCreate({
         where: {
           book_id: book.id,
@@ -37,7 +35,6 @@ class ReviewController {
         review,
       });
     } catch (err) {
-      console.log(err);
       return res.status(400).json({ error: 'Error creating review' });
     }
   }

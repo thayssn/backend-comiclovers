@@ -73,31 +73,35 @@ class UserController {
       return res.status(400).json({ error: 'Validation failed' });
     }
 
-    const { email, oldPassword } = req.body;
+    try {
+      const { email, oldPassword } = req.body;
 
-    const user = await User.findByPk(req.userId);
+      const user = await User.findByPk(req.userId);
 
-    if (email !== user.email) {
-      const userExists = await User.findOne({
-        where: { email: req.body.email },
-      });
+      if (email !== user.email) {
+        const userExists = await User.findOne({
+          where: { email: req.body.email },
+        });
 
-      if (userExists) {
-        return res.status(400).json({ error: 'User already exists' });
+        if (userExists) {
+          return res.status(400).json({ error: 'User already exists' });
+        }
       }
+
+      if (oldPassword && !(await user.verifyPassword(oldPassword))) {
+        return res.status(401).json({ error: 'Password does not match' });
+      }
+
+      const { id, name } = await user.update(req.body);
+
+      return res.status(200).json({
+        id,
+        name,
+        email,
+      });
+    } catch (err) {
+      return res.status(400).json({ error: 'Error trying to update user' });
     }
-
-    if (oldPassword && !(await user.verifyPassword(oldPassword))) {
-      return res.status(401).json({ error: 'Password does not match' });
-    }
-
-    const { id, name } = await user.update(req.body);
-
-    return res.status(200).json({
-      id,
-      name,
-      email,
-    });
   }
 
   async show(req, res) {

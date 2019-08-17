@@ -42,7 +42,6 @@ class UserCollectionController {
         collection,
       });
     } catch (err) {
-      console.log(err);
       return res.status(400).json({ error: 'Error creating collection' });
     }
   }
@@ -57,7 +56,6 @@ class UserCollectionController {
 
       return res.status(200).json(userCollections);
     } catch (err) {
-      console.log(err);
       return res.status(400).json({ error: 'Error tring to list collections' });
     }
   }
@@ -88,7 +86,6 @@ class UserCollectionController {
 
       return res.status(200).json(collection);
     } catch (err) {
-      console.log(err);
       return res.status(400).json({ error: 'Error tring to show collection' });
     }
   }
@@ -108,7 +105,6 @@ class UserCollectionController {
 
       return res.status(200).json(collection);
     } catch (err) {
-      console.log(err);
       return res
         .status(400)
         .json({ error: 'Error tring to update collection' });
@@ -123,7 +119,6 @@ class UserCollectionController {
 
       return res.status(200).json({ success: true });
     } catch (err) {
-      console.log(err);
       return res.status(400).json({ error: 'Error tring to show collection' });
     }
   }

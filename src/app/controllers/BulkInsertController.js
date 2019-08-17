@@ -54,7 +54,6 @@ class BulkInsertController {
         book.addPublishers(await Promise.all(bookPublishers));
 
         const bookLicensors = await data.licensors.map(async licensor => {
-          console.log(licensor.name);
           const [resultLicensor] = await Licensor.findOrCreate({
             where: { name: licensor.name },
             defaults: { name: licensor.name },
@@ -69,7 +68,6 @@ class BulkInsertController {
 
       return res.status(201).json(await Promise.all(result));
     } catch (err) {
-      console.log(err);
       return res.status(400).json({ error: 'Problem with bulk creation' });
     }
   }

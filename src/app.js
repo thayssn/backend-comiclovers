@@ -1,4 +1,5 @@
 import express from 'express';
+import morgan from 'morgan';
 import path from 'path';
 import routes from './routes';
 import './database';
@@ -11,6 +12,9 @@ class App {
   }
 
   middlewares() {
+    this.server.use(
+      morgan(':method :url :status :res[content-length] - :response-time ms')
+    );
     this.server.use(
       '/static/covers',
       express.static(path.join(__dirname, '..', 'media', 'book_covers'))

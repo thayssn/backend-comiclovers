@@ -66,6 +66,7 @@ routes.post(
   UserController.store
 );
 routes.post(`${API_BASE_URL}/auth`, AuthController.store);
+
 routes.use(authMiddleware);
 routes.get(`${API_BASE_URL}/users`, UserController.list);
 routes.get(`${API_BASE_URL}/me/`, UserController.show);
@@ -97,4 +98,5 @@ routes.delete(
 );
 
 routes.post(`${API_BASE_URL}/books/:id/review`, ReviewController.store);
+
 module.exports = routes;

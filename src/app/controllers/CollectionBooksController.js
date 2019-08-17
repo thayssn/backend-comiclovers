@@ -33,7 +33,6 @@ class CollectionBooksController {
         book,
       });
     } catch (err) {
-      console.log(err);
       return res.status(400).json({ error: 'Error add book to collection' });
     }
   }
@@ -60,7 +59,6 @@ class CollectionBooksController {
         message: 'Book removed successfully',
       });
     } catch (err) {
-      console.log(err);
       return res.status(400).json({ error: 'Error tring to show collection' });
     }
   }

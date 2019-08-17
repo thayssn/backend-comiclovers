@@ -151,7 +151,6 @@ class BookController {
         book: { id: book.id, title: book.title, isbn: book.isbn },
       });
     } catch (err) {
-      console.log(err);
       return res.status(400).json({ error: 'Error creating book' });
     }
   }
@@ -163,7 +162,7 @@ class BookController {
       const book = await Book.findByPk(id);
 
       if (!book) {
-        res.status(404).json({ error: 'Book not found' });
+        return res.status(404).json({ error: 'Book not found' });
       }
 
       if (body.isbn) {
@@ -197,7 +196,6 @@ class BookController {
 
       return res.status(200).json(book);
     } catch (err) {
-      console.log(err);
       return res.status(400).json({ error: 'Error updating book' });
     }
   }
@@ -208,7 +206,6 @@ class BookController {
       await Book.destroy({ where: { id } });
       return res.status(200).json({ success: 'Book deleted' });
     } catch (err) {
-      console.log(err);
       return res.status(400).json({ error: 'An error occurred' });
     }
   }
