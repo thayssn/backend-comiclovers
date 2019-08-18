@@ -11,7 +11,7 @@
     "lint:npm": "npx eslint ./",
     "build": "yarn sucrase-node ./src/server.js",
     "migrate": "yarn sequelize db:migrate",
-    "start": "yarn migrate && nodemon ./src/server.js"
+    "start": "nodemon ./src/server.js"
   },
   "engines": {
     "node": "10",
