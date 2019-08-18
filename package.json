@@ -9,10 +9,9 @@
     "cook:npm": "git init && npm i && npm init",
     "lint": "yarn eslint ./",
     "lint:npm": "npx eslint ./",
-    "start": "nodemon ./src/server.js",
     "build": "yarn sucrase-node ./src/server.js",
     "migrate": "yarn sequelize db:migrate",
-    "production": "yarn migrate && yarn build"
+    "start": "yarn migrate && nodemon ./src/server.js"
   },
   "engines": {
     "node": "10",
