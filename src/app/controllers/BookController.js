@@ -11,8 +11,10 @@ class BookController {
   async list(req, res) {
     try {
       const books = await Book.findAll({
+        order: [['updated_at', 'DESC']],
         attributes: [
           'id',
+          'isbn',
           'title',
           'description',
           'edition',
@@ -47,6 +49,7 @@ class BookController {
       const book = await Book.findByPk(id, {
         attributes: [
           'id',
+          'isbn',
           'title',
           'description',
           'edition',
@@ -135,12 +138,12 @@ class BookController {
       await book.setLicensors(body.licensors);
 
       if (req.file) {
-        book.thumbnail = `${book.isbn}.png`;
+        book.thumbnail = `static/covers/${book.isbn}.png`;
 
         await sharp(req.file.path)
           .resize(200)
           .jpeg({ quality: 70 })
-          .toFile(path.resolve(req.file.destination, book.thumbnail));
+          .toFile(path.resolve(req.file.destination, `${book.isbn}.png`));
         fs.unlinkSync(req.file.path);
 
         book.save();
@@ -185,12 +188,12 @@ class BookController {
       await book.setPublishers(body.publishers);
 
       if (req.file) {
-        book.thumbnail = `${book.isbn}.png`;
+        book.thumbnail = `static/covers/${book.isbn}.png`;
 
         await sharp(req.file.path)
           .resize(200)
           .jpeg({ quality: 70 })
-          .toFile(path.resolve(req.file.destination, book.thumbnail));
+          .toFile(path.resolve(req.file.destination, `${book.isbn}.png`));
         fs.unlinkSync(req.file.path);
       }
 
