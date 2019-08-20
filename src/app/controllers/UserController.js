@@ -25,22 +25,24 @@ class UserController {
         where: { email: req.body.email },
       });
       if (userExists) {
-        fs.unlinkSync(req.file.path);
+        if (req.file) {
+          fs.unlinkSync(req.file.path);
+        }
         return res.status(400).json({ error: 'User already exists' });
       }
 
       const user = await User.create(req.body);
 
-      user.profile_picture = `${user.id}.png`;
+      if (req.file) {
+        user.profile_picture = `${user.id}.png`;
+        await sharp(req.file.path)
+          .resize(200)
+          .jpeg({ quality: 70 })
+          .toFile(path.resolve(req.file.destination, user.profile_picture));
 
-      await sharp(req.file.path)
-        .resize(200)
-        .jpeg({ quality: 70 })
-        .toFile(path.resolve(req.file.destination, user.profile_picture));
-
-      fs.unlinkSync(req.file.path);
-
-      user.save();
+        fs.unlinkSync(req.file.path);
+        user.save();
+      }
 
       return res.status(201).json({
         id: user.id,
