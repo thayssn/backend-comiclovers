@@ -127,7 +127,12 @@ class UserController {
 
   async list(req, res) {
     try {
-      const users = await User.findAll();
+      let users = await User.findAll();
+      users = users.map(user => ({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      }));
       return res.status(200).json(users);
     } catch (err) {
       return res.status(400).json({ error: 'An error occurred' });
