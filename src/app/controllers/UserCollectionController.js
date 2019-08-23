@@ -8,7 +8,6 @@ import Book from '../models/Book';
 class UserCollectionController {
   async store(req, res) {
     try {
-      const body = JSON.parse(req.body.jsonPayload);
       const user = await User.findByPk(req.userId, {
         attributes: ['id', 'name'],
         include: [
@@ -20,7 +19,7 @@ class UserCollectionController {
         ],
       });
       const collection = await Collection.create({
-        ...body,
+        ...req.body,
         user_id: req.userId,
       });
 
