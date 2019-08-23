@@ -53,7 +53,7 @@ routes.post(
 );
 routes.get(`${API_BASE_URL}/books/`, BookController.list);
 routes.get(`${API_BASE_URL}/books/:id`, BookController.show);
-routes.get(`${API_BASE_URL}/books/`, BookController.showByISBN);
+routes.get(`${API_BASE_URL}/books/isbn/:isbn`, BookController.showByISBN);
 routes.put(`${API_BASE_URL}/books/:id`, BookController.update);
 routes.delete(`${API_BASE_URL}/books/:id`, BookController.remove);
 

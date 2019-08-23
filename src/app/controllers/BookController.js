@@ -98,13 +98,52 @@ class BookController {
   }
 
   async showByISBN(req, res) {
-    const { isbn } = req.body;
+    const { isbn } = req.params;
+    console.log(isbn);
     try {
       const book = await Book.findOne({
         where: {
           isbn,
         },
-        attributes: ['id'],
+        attributes: [
+          'id',
+          'isbn',
+          'title',
+          'description',
+          'edition',
+          'pages',
+          'price',
+          'thumbnail',
+          'format',
+          'total_rating',
+          'publishing_date',
+        ],
+        include: [
+          {
+            model: Illustrator,
+            as: 'illustrators',
+            attributes: ['name'],
+            through: { attributes: [] },
+          },
+          {
+            model: Writer,
+            as: 'writers',
+            attributes: ['name'],
+            through: { attributes: [] },
+          },
+          {
+            model: Publisher,
+            as: 'publishers',
+            attributes: ['name'],
+            through: { attributes: [] },
+          },
+          {
+            model: Licensor,
+            as: 'licensors',
+            attributes: ['name'],
+            through: { attributes: [] },
+          },
+        ],
       });
 
       if (!book) {
@@ -112,6 +151,7 @@ class BookController {
       }
       return res.status(200).json(book);
     } catch (err) {
+      console.log(err);
       return res.status(400).json({ error: 'Error trying to find book' });
     }
   }
