@@ -108,8 +108,8 @@ class UserController {
 
   async show(req, res) {
     try {
-      const { name, profile_picture } = await User.findByPk(req.userId);
-      return res.status(200).json({ name, profile_picture });
+      const { name, profile_picture, email } = await User.findByPk(req.userId);
+      return res.status(200).json({ name, email, profile_picture });
     } catch (err) {
       return res.status(404).json({ error: 'User not found' });
     }
