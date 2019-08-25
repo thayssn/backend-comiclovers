@@ -54,7 +54,11 @@ routes.post(
 routes.get(`${API_BASE_URL}/books/`, BookController.list);
 routes.get(`${API_BASE_URL}/books/:id`, BookController.show);
 routes.get(`${API_BASE_URL}/books/isbn/:isbn`, BookController.showByISBN);
-routes.put(`${API_BASE_URL}/books/:id`, BookController.update);
+routes.put(
+  `${API_BASE_URL}/books/:id`,
+  uploadMiddleware('book_covers', 'image'),
+  BookController.update
+);
 routes.delete(`${API_BASE_URL}/books/:id`, BookController.remove);
 
 routes.post(`${API_BASE_URL}/books/bulk`, BulkInsertController.bulkStore);
@@ -70,7 +74,11 @@ routes.post(`${API_BASE_URL}/auth`, AuthController.store);
 routes.use(authMiddleware);
 routes.get(`${API_BASE_URL}/users`, UserController.list);
 routes.get(`${API_BASE_URL}/me/`, UserController.show);
-routes.put(`${API_BASE_URL}/me`, UserController.update);
+routes.put(
+  `${API_BASE_URL}/me`,
+  uploadMiddleware('profile_pics', 'image'),
+  UserController.update
+);
 routes.delete(`${API_BASE_URL}/me`, UserController.remove);
 
 /* USER COLLECTION */

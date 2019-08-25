@@ -27,9 +27,27 @@ class BookController {
         ],
         include: [
           {
+            model: Illustrator,
+            as: 'illustrators',
+            attributes: ['name', 'id'],
+            through: { attributes: [] },
+          },
+          {
+            model: Writer,
+            as: 'writers',
+            attributes: ['name', 'id'],
+            through: { attributes: [] },
+          },
+          {
+            model: Publisher,
+            as: 'publishers',
+            attributes: ['name', 'id'],
+            through: { attributes: [] },
+          },
+          {
             model: Licensor,
             as: 'licensors',
-            attributes: ['name'],
+            attributes: ['name', 'id'],
             through: { attributes: [] },
           },
         ],
@@ -64,25 +82,25 @@ class BookController {
           {
             model: Illustrator,
             as: 'illustrators',
-            attributes: ['name'],
+            attributes: ['name', 'id'],
             through: { attributes: [] },
           },
           {
             model: Writer,
             as: 'writers',
-            attributes: ['name'],
+            attributes: ['name', 'id'],
             through: { attributes: [] },
           },
           {
             model: Publisher,
             as: 'publishers',
-            attributes: ['name'],
+            attributes: ['name', 'id'],
             through: { attributes: [] },
           },
           {
             model: Licensor,
             as: 'licensors',
-            attributes: ['name'],
+            attributes: ['name', 'id'],
             through: { attributes: [] },
           },
         ],
@@ -122,25 +140,25 @@ class BookController {
           {
             model: Illustrator,
             as: 'illustrators',
-            attributes: ['name'],
+            attributes: ['name', 'id'],
             through: { attributes: [] },
           },
           {
             model: Writer,
             as: 'writers',
-            attributes: ['name'],
+            attributes: ['name', 'id'],
             through: { attributes: [] },
           },
           {
             model: Publisher,
             as: 'publishers',
-            attributes: ['name'],
+            attributes: ['name', 'id'],
             through: { attributes: [] },
           },
           {
             model: Licensor,
             as: 'licensors',
-            attributes: ['name'],
+            attributes: ['name', 'id'],
             through: { attributes: [] },
           },
         ],
@@ -200,10 +218,10 @@ class BookController {
 
   async update(req, res) {
     const { id } = req.params;
-    const { body } = req;
-    try {
-      const book = await Book.findByPk(id);
 
+    try {
+      const body = JSON.parse(req.body.jsonPayload);
+      const book = await Book.findByPk(id);
       if (!book) {
         return res.status(404).json({ error: 'Book not found' });
       }
@@ -214,6 +232,7 @@ class BookController {
         });
 
         if (bookExists) {
+          console.log('existeee', req.file);
           return res.status(400).json({
             error: `book already exists`,
           });
@@ -235,10 +254,13 @@ class BookController {
           .jpeg({ quality: 70 })
           .toFile(path.resolve(req.file.destination, `${book.isbn}.png`));
         fs.unlinkSync(req.file.path);
+
+        book.save();
       }
 
       return res.status(200).json(book);
     } catch (err) {
+      console.log('ERROOOO', err);
       return res.status(400).json({ error: 'Error updating book' });
     }
   }
