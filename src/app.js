@@ -18,6 +18,14 @@ class App {
       morgan(':method :url :status :res[content-length] - :response-time ms')
     );
     this.server.use(
+      '/static/users/',
+      express.static(path.join(__dirname, '..', 'media', 'profile_pics'))
+    );
+    this.server.use(
+      '/static/collections',
+      express.static(path.join(__dirname, '..', 'media', 'collection_covers'))
+    );
+    this.server.use(
       '/static/covers',
       express.static(path.join(__dirname, '..', 'media', 'book_covers'))
     );

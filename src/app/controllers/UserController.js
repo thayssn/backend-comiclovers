@@ -34,11 +34,11 @@ class UserController {
       const user = await User.create(req.body);
 
       if (req.file) {
-        user.profile_picture = `${user.id}.png`;
+        user.profile_picture = `static/users/${user.id}.png`;
         await sharp(req.file.path)
           .resize(200)
           .jpeg({ quality: 70 })
-          .toFile(path.resolve(req.file.destination, user.profile_picture));
+          .toFile(path.resolve(req.file.destination, `${user.id}.png`));
 
         fs.unlinkSync(req.file.path);
         user.save();
@@ -132,6 +132,7 @@ class UserController {
         id: user.id,
         name: user.name,
         email: user.email,
+        profile_picture: user.profile_picture,
       }));
       return res.status(200).json(users);
     } catch (err) {

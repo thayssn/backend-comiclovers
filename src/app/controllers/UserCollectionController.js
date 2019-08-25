@@ -24,12 +24,12 @@ class UserCollectionController {
       });
 
       if (req.file) {
-        collection.thumbnail = `${collection.id}.png`;
+        collection.thumbnail = `static/users/${collection.id}.png`;
 
         await sharp(req.file.path)
           .resize(200)
           .jpeg({ quality: 70 })
-          .toFile(path.resolve(req.file.destination, collection.thumbnail));
+          .toFile(path.resolve(req.file.destination, `${collection.id}.png`));
         fs.unlinkSync(req.file.path);
 
         collection.save();
