@@ -34,6 +34,7 @@ class UserController {
       const user = await User.create(req.body);
 
       if (req.file) {
+        console.log(`${req.file.destination}${user.id}.png`);
         user.profile_picture = `static/users/${user.id}.png`;
         await sharp(req.file.path)
           .resize(200)
@@ -50,6 +51,7 @@ class UserController {
         email: user.email,
       });
     } catch (err) {
+      console.log(err);
       return res
         .status(400)
         .json({ error: 'An error ocurred during the register' });

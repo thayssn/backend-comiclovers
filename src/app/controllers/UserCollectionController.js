@@ -24,7 +24,7 @@ class UserCollectionController {
       });
 
       if (req.file) {
-        collection.thumbnail = `static/users/${collection.id}.png`;
+        collection.thumbnail = `static/collections/${collection.id}.png`;
 
         await sharp(req.file.path)
           .resize(200)
