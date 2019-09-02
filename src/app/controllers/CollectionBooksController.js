@@ -1,5 +1,4 @@
 import Collection from '../models/Collection';
-import Book from '../models/Book';
 
 class CollectionBooksController {
   async store(req, res) {
@@ -11,26 +10,18 @@ class CollectionBooksController {
         },
       });
 
+      const { books } = req.body;
+
       if (!collection) {
         return res.status(404).json({
           error: 'Collection not found',
         });
       }
 
-      const book = await Book.findByPk(req.body.id, {
-        attributes: ['id', 'title'],
-      });
-
-      if (!book) {
-        return res.status(404).json({
-          error: 'Book not found',
-        });
-      }
-
-      await collection.addBook(book);
+      await collection.setBooks(books);
 
       return res.status(201).json({
-        book,
+        success: true,
       });
     } catch (err) {
       return res.status(400).json({ error: 'Error add book to collection' });

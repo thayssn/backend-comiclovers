@@ -88,6 +88,10 @@ routes.post(
   UserCollectionController.store
 );
 routes.get(`${API_BASE_URL}/collections/`, UserCollectionController.list);
+routes.get(
+  `${API_BASE_URL}/public/collections/`,
+  UserCollectionController.listPublic
+);
 routes.get(`${API_BASE_URL}/collections/:id`, UserCollectionController.show);
 routes.put(`${API_BASE_URL}/collections/:id`, UserCollectionController.update);
 routes.delete(

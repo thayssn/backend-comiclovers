@@ -121,6 +121,30 @@ class UserCollectionController {
       return res.status(400).json({ error: 'Error tring to show collection' });
     }
   }
+
+  async listPublic(req, res) {
+    try {
+      const collections = await Collection.findAll({
+        where: {
+          type: 'public',
+        },
+        attributes: ['id', 'title', 'thumbnail'],
+        include: [
+          {
+            model: Book,
+            as: 'books',
+            attributes: ['id', 'title', 'thumbnail'],
+          },
+        ],
+      });
+      return res.status(200).json(collections);
+    } catch (err) {
+      console.log(err);
+      return res
+        .status(400)
+        .json({ error: 'Error tring to list public collections' });
+    }
+  }
 }
 
 export default new UserCollectionController();

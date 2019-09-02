@@ -14,6 +14,9 @@ class Collection extends Model {
         thumbnail: {
           type: Sequelize.STRING,
         },
+        type: {
+          type: Sequelize.STRING,
+        },
       },
       {
         sequelize,
