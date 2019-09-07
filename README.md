@@ -27,3 +27,13 @@ migrate the database
 ```
 yarn sequelize db:migrate
 ```
+
+## Backup and Restore Database with Docker
+Backup:
+```
+docker exec -t backend-comiclovers_db_1 pg_dump -c -U comiclovers comiclovers > /var/www/backup/comiclovers_`date +%d-%m-%Y"_"%H_%M_%S`.sql
+```
+Restore:
+```
+cat backup.sql | docker exec -i backend-comiclovers_db_1 psql -U comiclovers
+```
