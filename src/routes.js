@@ -63,14 +63,17 @@ routes.delete(`${API_BASE_URL}/books/:id`, BookController.remove);
 
 routes.post(`${API_BASE_URL}/books/bulk`, BulkInsertController.bulkStore);
 
+/* AUTHENTICATION */
+routes.post(`${API_BASE_URL}/auth`, AuthController.authenticate);
+routes.post(`${API_BASE_URL}/forgot_password`, AuthController.forgotPassword);
+routes.post(`${API_BASE_URL}/reset_password`, AuthController.resetPassword);
+
 /* USER ROUTES */
 routes.post(
   `${API_BASE_URL}/users`,
   uploadMiddleware('profile_pics', 'image'),
   UserController.store
 );
-routes.post(`${API_BASE_URL}/auth`, AuthController.store);
-
 routes.use(authMiddleware);
 routes.get(`${API_BASE_URL}/users`, UserController.list);
 routes.get(`${API_BASE_URL}/me/`, UserController.show);
