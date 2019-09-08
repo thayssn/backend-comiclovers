@@ -44,6 +44,7 @@ class AuthController {
         }),
       });
     } catch (err) {
+      console.log(err);
       return res
         .status(400)
         .json({ error: 'An error ocurred during authentication' });
@@ -105,6 +106,7 @@ class AuthController {
         }
       );
     } catch (err) {
+      console.log(err);
       return res
         .status(400)
         .json({ error: 'An error ocurred at forgot password' });
@@ -150,6 +152,7 @@ class AuthController {
 
       return res.status(200).json({ success: true });
     } catch (err) {
+      console.log(err);
       return res.status(400).json({ error: 'Cannot reset password' });
     }
   }
