@@ -24,6 +24,7 @@ class CollectionBooksController {
         success: true,
       });
     } catch (err) {
+      console.log(err);
       return res.status(400).json({ error: 'Error add book to collection' });
     }
   }
@@ -33,7 +34,6 @@ class CollectionBooksController {
       const collection = await Collection.findOne({
         where: {
           id: req.params.id,
-          user_id: req.userId,
         },
       });
 
@@ -43,13 +43,14 @@ class CollectionBooksController {
         });
       }
 
-      await collection.removeBook(req.body.id);
+      await collection.removeBook(req.params.bookId);
 
       return res.status(200).json({
         success: true,
         message: 'Book removed successfully',
       });
     } catch (err) {
+      console.log(err);
       return res.status(400).json({ error: 'Error tring to show collection' });
     }
   }

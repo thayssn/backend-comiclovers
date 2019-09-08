@@ -108,7 +108,7 @@ routes.post(
   CollectionBooksController.store
 );
 routes.delete(
-  `${API_BASE_URL}/collections/:id/books/`,
+  `${API_BASE_URL}/collections/:id/books/:bookId`,
   CollectionBooksController.remove
 );
 
