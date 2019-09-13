@@ -6,6 +6,7 @@ import Illustrator from '../models/Illustrator';
 import Writer from '../models/Writer';
 import Publisher from '../models/Publisher';
 import Licensor from '../models/Licensor';
+import Review from '../models/Review';
 
 class BookController {
   async list(req, res) {
@@ -103,21 +104,27 @@ class BookController {
             attributes: ['name', 'id'],
             through: { attributes: [] },
           },
+          {
+            model: Review,
+            as: 'reviews',
+            attributes: ['rating', 'id', 'UserId'],
+          },
         ],
       });
 
       if (!book) {
         return res.status(404).json({ error: 'Book not found' });
       }
+
       return res.status(200).json(book);
     } catch (err) {
+      console.log('error', err);
       return res.status(400).json({ error: 'Error trying to find book' });
     }
   }
 
   async showByISBN(req, res) {
     const { isbn } = req.params;
-    console.log(isbn);
     try {
       const book = await Book.findOne({
         where: {
@@ -169,7 +176,6 @@ class BookController {
       }
       return res.status(200).json(book);
     } catch (err) {
-      console.log(err);
       return res.status(400).json({ error: 'Error trying to find book' });
     }
   }
@@ -260,7 +266,6 @@ class BookController {
 
       return res.status(200).json(book);
     } catch (err) {
-      console.log('ERROOOO', err);
       return res.status(400).json({ error: 'Error updating book' });
     }
   }

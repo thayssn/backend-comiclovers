@@ -36,9 +36,11 @@ class Book extends Model {
         },
         total_rating: {
           type: Sequelize.INTEGER,
+          defaultValue: 0,
         },
         total_favorites: {
           type: Sequelize.INTEGER,
+          defaultValue: 0,
         },
       },
       {

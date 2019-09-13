@@ -112,6 +112,7 @@ routes.delete(
   CollectionBooksController.remove
 );
 
+routes.get(`${API_BASE_URL}/books/:id/review`, ReviewController.show);
 routes.post(`${API_BASE_URL}/books/:id/review`, ReviewController.store);
 
 module.exports = routes;

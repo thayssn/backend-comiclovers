@@ -50,7 +50,7 @@ class UserCollectionController {
       const user = await User.findByPk(req.userId);
 
       const userCollections = await user.getCollections({
-        attributes: ['id', 'title', 'thumbnail'],
+        attributes: ['id', 'title', 'thumbnail', 'type'],
       });
 
       return res.status(200).json(userCollections);
