@@ -66,7 +66,7 @@ class UserCollectionController {
           id: req.params.id,
           user_id: req.userId,
         },
-        attributes: ['id', 'title', 'thumbnail'],
+        attributes: ['id', 'title', 'thumbnail', 'description'],
         include: {
           model: Book,
           as: 'books',
@@ -141,7 +141,7 @@ class UserCollectionController {
         where: {
           type: 'public',
         },
-        attributes: ['id', 'title', 'thumbnail'],
+        attributes: ['id', 'title', 'thumbnail', 'description'],
         include: [
           {
             model: Book,
@@ -165,7 +165,7 @@ class UserCollectionController {
           id: req.params.id,
           type: 'public',
         },
-        attributes: ['id', 'title', 'thumbnail'],
+        attributes: ['id', 'title', 'thumbnail', 'description'],
         include: {
           model: Book,
           as: 'books',
