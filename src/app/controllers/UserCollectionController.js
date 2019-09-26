@@ -61,12 +61,10 @@ class UserCollectionController {
 
   async show(req, res) {
     try {
-      const user = await User.findByPk(req.userId);
-
       const collection = await Collection.findOne({
         where: {
           id: req.params.id,
-          user_id: user.id,
+          user_id: req.userId,
         },
         attributes: ['id', 'title', 'thumbnail'],
         include: {
@@ -91,16 +89,14 @@ class UserCollectionController {
 
   async update(req, res) {
     try {
-      const user = await User.findByPk(req.userId);
-
       const collection = await Collection.findOne({
         where: {
           id: req.params.id,
-          user_id: user.id,
+          user_id: req.userId,
         },
       });
 
-      collection.update(req.body);
+      await collection.update(req.body);
 
       return res.status(200).json(collection);
     } catch (err) {
@@ -112,13 +108,18 @@ class UserCollectionController {
 
   async remove(req, res) {
     try {
-      const user = await User.findByPk(req.userId);
-
-      user.removeCollection(req.params.id);
+      await Collection.destroy({
+        where: {
+          id: req.params.id,
+          user_id: req.userId,
+        },
+      });
 
       return res.status(200).json({ success: true });
     } catch (err) {
-      return res.status(400).json({ error: 'Error tring to show collection' });
+      return res
+        .status(400)
+        .json({ error: 'Error tring to remove collection' });
     }
   }
 
@@ -139,10 +140,76 @@ class UserCollectionController {
       });
       return res.status(200).json(collections);
     } catch (err) {
-      console.log(err);
       return res
         .status(400)
         .json({ error: 'Error tring to list public collections' });
+    }
+  }
+
+  async showPublic(req, res) {
+    try {
+      const collection = await Collection.findOne({
+        where: {
+          id: req.params.id,
+          type: 'public',
+        },
+        attributes: ['id', 'title', 'thumbnail'],
+        include: {
+          model: Book,
+          as: 'books',
+          attributes: ['id', 'title', 'thumbnail'],
+          through: {
+            attributes: [],
+          },
+        },
+      });
+
+      if (!collection) {
+        return res.status(404).json({ error: 'Collection not found' });
+      }
+
+      return res.status(200).json(collection);
+    } catch (err) {
+      return res
+        .status(400)
+        .json({ error: 'Error tring to show public collection' });
+    }
+  }
+
+  async updatePublic(req, res) {
+    try {
+      const collection = await Collection.findOne({
+        where: {
+          id: req.params.id,
+          type: 'public',
+        },
+      });
+
+      await collection.update(req.body);
+
+      return res.status(200).json(collection);
+    } catch (err) {
+      return res
+        .status(400)
+        .json({ error: 'Error tring to update public collection' });
+    }
+  }
+
+  async removePublic(req, res) {
+    try {
+      await Collection.destroy({
+        where: {
+          id: req.params.id,
+          type: 'public',
+        },
+      });
+
+      return res.status(200).json({ success: true });
+    } catch (err) {
+      console.log(err);
+      return res
+        .status(400)
+        .json({ error: 'Error tring to remove public collection' });
     }
   }
 }

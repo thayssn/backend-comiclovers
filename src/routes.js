@@ -84,6 +84,24 @@ routes.put(
 );
 routes.delete(`${API_BASE_URL}/me`, UserController.remove);
 
+/* PUBLIC COLLECTION */
+routes.get(
+  `${API_BASE_URL}/public/collections/`,
+  UserCollectionController.listPublic
+);
+routes.get(
+  `${API_BASE_URL}/public/collections/:id`,
+  UserCollectionController.showPublic
+);
+routes.put(
+  `${API_BASE_URL}/public/collections/:id`,
+  UserCollectionController.updatePublic
+);
+routes.delete(
+  `${API_BASE_URL}/public/collections/:id`,
+  UserCollectionController.removePublic
+);
+
 /* USER COLLECTION */
 routes.post(
   `${API_BASE_URL}/collections/`,
@@ -91,10 +109,6 @@ routes.post(
   UserCollectionController.store
 );
 routes.get(`${API_BASE_URL}/collections/`, UserCollectionController.list);
-routes.get(
-  `${API_BASE_URL}/public/collections/`,
-  UserCollectionController.listPublic
-);
 routes.get(`${API_BASE_URL}/collections/:id`, UserCollectionController.show);
 routes.put(`${API_BASE_URL}/collections/:id`, UserCollectionController.update);
 routes.delete(
@@ -112,6 +126,7 @@ routes.delete(
   CollectionBooksController.remove
 );
 
+/*  REVIEWS */
 routes.get(`${API_BASE_URL}/books/:id/review`, ReviewController.show);
 routes.post(`${API_BASE_URL}/books/:id/review`, ReviewController.store);
 
