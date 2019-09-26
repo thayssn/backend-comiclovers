@@ -95,6 +95,7 @@ routes.get(
 );
 routes.put(
   `${API_BASE_URL}/public/collections/:id`,
+  uploadMiddleware('collection_covers', 'image'),
   UserCollectionController.updatePublic
 );
 routes.delete(
@@ -110,7 +111,11 @@ routes.post(
 );
 routes.get(`${API_BASE_URL}/collections/`, UserCollectionController.list);
 routes.get(`${API_BASE_URL}/collections/:id`, UserCollectionController.show);
-routes.put(`${API_BASE_URL}/collections/:id`, UserCollectionController.update);
+routes.put(
+  `${API_BASE_URL}/collections/:id`,
+  uploadMiddleware('collection_covers', 'image'),
+  UserCollectionController.update
+);
 routes.delete(
   `${API_BASE_URL}/collections/:id`,
   UserCollectionController.remove

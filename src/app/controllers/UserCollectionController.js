@@ -32,7 +32,7 @@ class UserCollectionController {
           .toFile(path.resolve(req.file.destination, `${collection.id}.png`));
         fs.unlinkSync(req.file.path);
 
-        collection.save();
+        await collection.save();
       }
 
       await user.addCollection(collection);
@@ -97,6 +97,18 @@ class UserCollectionController {
       });
 
       await collection.update(req.body);
+
+      if (req.file) {
+        collection.thumbnail = `static/collections/${collection.id}.png`;
+
+        await sharp(req.file.path)
+          .resize(200)
+          .jpeg({ quality: 70 })
+          .toFile(path.resolve(req.file.destination, `${collection.id}.png`));
+        fs.unlinkSync(req.file.path);
+
+        await collection.save();
+      }
 
       return res.status(200).json(collection);
     } catch (err) {
@@ -186,6 +198,18 @@ class UserCollectionController {
       });
 
       await collection.update(req.body);
+
+      if (req.file) {
+        collection.thumbnail = `static/collections/${collection.id}.png`;
+
+        await sharp(req.file.path)
+          .resize(200)
+          .jpeg({ quality: 70 })
+          .toFile(path.resolve(req.file.destination, `${collection.id}.png`));
+        fs.unlinkSync(req.file.path);
+
+        await collection.save();
+      }
 
       return res.status(200).json(collection);
     } catch (err) {

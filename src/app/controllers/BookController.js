@@ -238,7 +238,6 @@ class BookController {
         });
 
         if (bookExists) {
-          console.log('existeee', req.file);
           return res.status(400).json({
             error: `book already exists`,
           });
