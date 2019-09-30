@@ -123,52 +123,14 @@ class BookController {
     }
   }
 
-  async showByISBN(req, res) {
+  async findByISBN(req, res) {
     const { isbn } = req.params;
     try {
       const book = await Book.findOne({
         where: {
           isbn,
         },
-        attributes: [
-          'id',
-          'isbn',
-          'title',
-          'description',
-          'edition',
-          'pages',
-          'price',
-          'thumbnail',
-          'format',
-          'total_rating',
-          'publishing_date',
-        ],
-        include: [
-          {
-            model: Illustrator,
-            as: 'illustrators',
-            attributes: ['name', 'id'],
-            through: { attributes: [] },
-          },
-          {
-            model: Writer,
-            as: 'writers',
-            attributes: ['name', 'id'],
-            through: { attributes: [] },
-          },
-          {
-            model: Publisher,
-            as: 'publishers',
-            attributes: ['name', 'id'],
-            through: { attributes: [] },
-          },
-          {
-            model: Licensor,
-            as: 'licensors',
-            attributes: ['name', 'id'],
-            through: { attributes: [] },
-          },
-        ],
+        attributes: ['id', 'title'],
       });
 
       if (!book) {

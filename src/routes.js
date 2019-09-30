@@ -53,7 +53,7 @@ routes.post(
 );
 routes.get(`${API_BASE_URL}/books/`, BookController.list);
 routes.get(`${API_BASE_URL}/books/:id`, BookController.show);
-routes.get(`${API_BASE_URL}/books/isbn/:isbn`, BookController.showByISBN);
+routes.get(`${API_BASE_URL}/books/isbn/:isbn`, BookController.findByISBN);
 routes.put(
   `${API_BASE_URL}/books/:id`,
   uploadMiddleware('book_covers', 'image'),
