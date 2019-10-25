@@ -71,7 +71,7 @@ class UserCollectionController {
         include: {
           model: Book,
           as: 'books',
-          attributes: ['id', 'title', 'thumbnail'],
+          attributes: ['id', 'title', 'thumbnail', 'edition'],
           through: {
             attributes: [],
           },
@@ -147,7 +147,7 @@ class UserCollectionController {
           {
             model: Book,
             as: 'books',
-            attributes: ['id', 'title', 'thumbnail'],
+            attributes: ['id', 'title', 'thumbnail', 'edition'],
           },
         ],
       });
@@ -170,7 +170,7 @@ class UserCollectionController {
         include: {
           model: Book,
           as: 'books',
-          attributes: ['id', 'title', 'thumbnail'],
+          attributes: ['id', 'title', 'thumbnail', 'edition'],
           through: {
             attributes: [],
           },
