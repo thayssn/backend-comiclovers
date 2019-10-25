@@ -3,7 +3,14 @@ import Licensor from '../models/Licensor';
 class LicensorController {
   async list(req, res) {
     try {
-      const licensors = await Licensor.findAll();
+      const currentPage = req.query.page;
+      const currentLimit = req.query.limit;
+      const limit = parseInt(currentLimit, 0) || 20;
+      const offset = limit * (parseInt(currentPage, 0) || 0);
+      const licensors = await Licensor.findAll({
+        offset,
+        limit,
+      });
       return res.status(200).json(licensors);
     } catch (err) {
       return res.status(400).json({ error: 'Error listing licensors' });

@@ -3,7 +3,14 @@ import Writer from '../models/Writer';
 class WriterController {
   async list(req, res) {
     try {
-      const writers = await Writer.findAll();
+      const currentPage = req.query.page;
+      const currentLimit = req.query.limit;
+      const limit = parseInt(currentLimit, 0) || 20;
+      const offset = limit * (parseInt(currentPage, 0) || 0);
+      const writers = await Writer.findAll({
+        limit,
+        offset,
+      });
       return res.status(200).json(writers);
     } catch (err) {
       return res.status(400).json({ error: 'Error listing writers' });

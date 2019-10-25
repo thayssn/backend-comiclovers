@@ -3,7 +3,14 @@ import Illustrator from '../models/Illustrator';
 class IllustratorController {
   async list(req, res) {
     try {
-      const illustrators = await Illustrator.findAll();
+      const currentPage = req.query.page;
+      const currentLimit = req.query.limit;
+      const limit = parseInt(currentLimit, 0) || 20;
+      const offset = limit * (parseInt(currentPage, 0) || 0);
+      const illustrators = await Illustrator.findAll({
+        offset,
+        limit,
+      });
       return res.status(200).json(illustrators);
     } catch (err) {
       return res.status(400).json({ error: 'Error listing illustrator' });

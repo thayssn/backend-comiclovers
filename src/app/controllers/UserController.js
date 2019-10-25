@@ -129,7 +129,14 @@ class UserController {
 
   async list(req, res) {
     try {
-      let users = await User.findAll();
+      const currentPage = req.query.page;
+      const currentLimit = req.query.limit;
+      const limit = parseInt(currentLimit, 0) || 20;
+      const offset = limit * (parseInt(currentPage, 0) || 0);
+      let users = await User.findAll({
+        limit,
+        offset,
+      });
       users = users.map(user => ({
         id: user.id,
         name: user.name,

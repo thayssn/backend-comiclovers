@@ -11,7 +11,13 @@ import Review from '../models/Review';
 class BookController {
   async list(req, res) {
     try {
+      const currentPage = req.query.page;
+      const currentLimit = req.query.limit;
+      const limit = parseInt(currentLimit, 0) || 20;
+      const offset = limit * (parseInt(currentPage, 0) || 0);
       const books = await Book.findAll({
+        limit,
+        offset,
         order: [['updated_at', 'DESC']],
         attributes: [
           'id',
@@ -25,6 +31,7 @@ class BookController {
           'format',
           'total_rating',
           'publishing_date',
+          'updated_at',
         ],
         include: [
           {
@@ -53,12 +60,13 @@ class BookController {
           },
         ],
       });
+
       if (!books.length) {
         return res.status(404).json({ error: 'No books found' });
       }
       return res.status(200).json(books);
     } catch (err) {
-      return res.status(400).json({ error: 'Error listing book' });
+      return res.status(400).json({ error: 'Error listing books' });
     }
   }
 
