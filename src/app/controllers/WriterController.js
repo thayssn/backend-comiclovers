@@ -5,7 +5,7 @@ class WriterController {
     try {
       const currentPage = req.query.page;
       const currentLimit = req.query.limit;
-      const limit = parseInt(currentLimit, 0) || 20;
+      const limit = parseInt(currentLimit, 0) || 100;
       const offset = limit * (parseInt(currentPage, 0) || 0);
       const writers = await Writer.findAll({
         limit,
