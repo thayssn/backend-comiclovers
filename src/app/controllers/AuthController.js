@@ -19,9 +19,9 @@ class AuthController {
     }
 
     const { email, password } = req.body;
-
+    const userEmail = email.toLowerCase();
     try {
-      const user = await User.findOne({ where: { email } });
+      const user = await User.findOne({ where: { email: userEmail } });
 
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
@@ -37,14 +37,13 @@ class AuthController {
         user: {
           id,
           name,
-          email,
+          userEmail,
         },
         token: jwt.sign({ id }, authConfig.secret, {
           expiresIn: authConfig.expiresIn,
         }),
       });
     } catch (err) {
-      console.log(err);
       return res
         .status(400)
         .json({ error: 'An error ocurred during authentication' });
@@ -63,9 +62,9 @@ class AuthController {
     }
 
     const { email } = req.body;
-
+    const userEmail = email.toLowerCase();
     try {
-      const user = await User.findOne({ where: { email } });
+      const user = await User.findOne({ where: { email: userEmail } });
 
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
@@ -82,7 +81,7 @@ class AuthController {
 
       return mailer.sendMail(
         {
-          to: email,
+          to: userEmail,
           from: 'Comic Lovers <admin@comiclovers.com.br>',
           subject: 'Redefinição de senha',
           template: 'default',
@@ -91,22 +90,20 @@ class AuthController {
             content: `
             <p>Olá, ${user.name}.</p>
             <p>Se você solicitou a redefinição da sua senha, utilize o link abaixo, que irá expirar em 1 hora: </p>
-            <a href="http://painel.comiclovers.com.br/reset_password?email=${email}&token=${token}
-            ">http://painel.comiclovers.com.br/reset_password?email=${email}&token=${token}</a>
+            <a href="http://painel.comiclovers.com.br/reset_password?email=${userEmail}&token=${token}
+            ">http://painel.comiclovers.com.br/reset_password?email=${userEmail}&token=${token}</a>
             <p>Caso contrário, ignore este e-mail.</p>
             `,
           },
         },
         err => {
           if (err) {
-            console.log(err);
             return res.status(400).json({ error: 'Could not send email' });
           }
           return res.status(200).json({ success: true });
         }
       );
     } catch (err) {
-      console.log(err);
       return res
         .status(400)
         .json({ error: 'An error ocurred at forgot password' });
@@ -127,9 +124,9 @@ class AuthController {
     }
 
     const { email, token, password } = req.body;
-
+    const userEmail = email.toLowerCase();
     try {
-      const user = await User.findOne({ where: { email } });
+      const user = await User.findOne({ where: { email: userEmail } });
 
       if (!user) {
         return res.status(404).json({ error: 'User not found' });

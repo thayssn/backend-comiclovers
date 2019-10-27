@@ -20,9 +20,11 @@ class UserController {
       return res.status(400).json({ error: 'Validation failed' });
     }
 
+    const userEmail = req.body.email.toLowerCase();
+
     try {
       const userExists = await User.findOne({
-        where: { email: req.body.email },
+        where: { email: userEmail },
       });
       if (userExists) {
         if (req.file) {
@@ -31,10 +33,9 @@ class UserController {
         return res.status(400).json({ error: 'User already exists' });
       }
 
-      const user = await User.create(req.body);
+      const user = await User.create({ ...req.body, email: userEmail });
 
       if (req.file) {
-        console.log(`${req.file.destination}${user.id}.png`);
         user.profile_picture = `static/users/${user.id}.png`;
         await sharp(req.file.path)
           .resize(200)
@@ -51,7 +52,6 @@ class UserController {
         email: user.email,
       });
     } catch (err) {
-      console.log(err);
       return res
         .status(400)
         .json({ error: 'An error ocurred during the register' });
@@ -79,12 +79,13 @@ class UserController {
 
     try {
       const { email, oldPassword } = req.body;
+      const newEmail = email.toLowerCase();
 
       const user = await User.findByPk(req.userId);
 
-      if (email !== user.email) {
+      if (newEmail !== user.email) {
         const userExists = await User.findOne({
-          where: { email: req.body.email },
+          where: { email: newEmail },
         });
 
         if (userExists) {
@@ -96,12 +97,10 @@ class UserController {
         return res.status(401).json({ error: 'Password does not match' });
       }
 
-      const { id, name } = await user.update(req.body);
+      await user.update({ ...req.body, email: newEmail });
 
       return res.status(200).json({
-        id,
-        name,
-        email,
+        success: true,
       });
     } catch (err) {
       return res.status(400).json({ error: 'Error trying to update user' });
