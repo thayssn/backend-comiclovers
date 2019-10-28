@@ -50,6 +50,55 @@ class AuthController {
     }
   }
 
+  async authenticateWithFB(req, res) {
+    const schema = Yup.object().shape({
+      email: Yup.string()
+        .email()
+        .required(),
+      token: Yup.string().required(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation failed' });
+    }
+
+    const { email, name, token } = req.body;
+
+    const userEmail = email.toLowerCase();
+    try {
+      const [user] = await User.findOrCreate({
+        where: { email: userEmail },
+        defaults: {
+          email: userEmail,
+          name,
+          password: token,
+        },
+      });
+
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+
+      const { id } = user;
+
+      return res.status(200).json({
+        user: {
+          id,
+          name,
+          userEmail,
+        },
+        token: jwt.sign({ id }, authConfig.secret, {
+          expiresIn: authConfig.expiresIn,
+        }),
+      });
+    } catch (err) {
+      console.log(err);
+      return res
+        .status(400)
+        .json({ error: 'An error ocurred during authentication' });
+    }
+  }
+
   async forgotPassword(req, res) {
     const schema = Yup.object().shape({
       email: Yup.string()
@@ -149,7 +198,6 @@ class AuthController {
 
       return res.status(200).json({ success: true });
     } catch (err) {
-      console.log(err);
       return res.status(400).json({ error: 'Cannot reset password' });
     }
   }

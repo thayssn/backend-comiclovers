@@ -65,6 +65,7 @@ routes.post(`${API_BASE_URL}/books/bulk`, BulkInsertController.bulkStore);
 
 /* AUTHENTICATION */
 routes.post(`${API_BASE_URL}/auth`, AuthController.authenticate);
+routes.post(`${API_BASE_URL}/fb_auth`, AuthController.authenticateWithFB);
 routes.post(`${API_BASE_URL}/forgot_password`, AuthController.forgotPassword);
 routes.post(`${API_BASE_URL}/reset_password`, AuthController.resetPassword);
 
