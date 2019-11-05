@@ -159,14 +159,16 @@ class BookController {
     const body = JSON.parse(req.body.jsonPayload);
 
     try {
-      const bookExists = await Book.findOne({
-        where: { isbn: body.isbn },
-      });
-
-      if (bookExists) {
-        return res.status(400).json({
-          error: `Book already exists`,
+      if (body.isbn) {
+        const bookExists = await Book.findOne({
+          where: { isbn: body.isbn },
         });
+
+        if (bookExists) {
+          return res.status(400).json({
+            error: `Book already exists`,
+          });
+        }
       }
 
       const book = await Book.create(body);
