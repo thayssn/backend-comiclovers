@@ -44,7 +44,7 @@
     "pg": "^7.11.0",
     "pg-hstore": "^2.3.3",
     "sequelize": "^5.9.0",
-    "sharp": "^0.22.1",
+    "sharp": "^0.23.2",
     "yup": "^0.27.0"
   },
   "main": "./src/server.js",
