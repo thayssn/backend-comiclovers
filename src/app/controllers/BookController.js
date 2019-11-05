@@ -177,12 +177,12 @@ class BookController {
       await book.setLicensors(body.licensors);
 
       if (req.file) {
-        book.thumbnail = `static/covers/${book.isbn}.png`;
+        book.thumbnail = `static/covers/${book.id}.png`;
 
         await sharp(req.file.path)
           .resize(200)
           .jpeg({ quality: 70 })
-          .toFile(path.resolve(req.file.destination, `${book.isbn}.png`));
+          .toFile(path.resolve(req.file.destination, `${book.id}.png`));
         fs.unlinkSync(req.file.path);
 
         book.save();
@@ -227,12 +227,12 @@ class BookController {
       await book.setPublishers(body.publishers);
 
       if (req.file) {
-        book.thumbnail = `static/covers/${book.isbn}.png`;
+        book.thumbnail = `static/covers/${book.id}.png`;
 
         await sharp(req.file.path)
           .resize(200)
           .jpeg({ quality: 70 })
-          .toFile(path.resolve(req.file.destination, `${book.isbn}.png`));
+          .toFile(path.resolve(req.file.destination, `${book.id}.png`));
         fs.unlinkSync(req.file.path);
 
         book.save();
@@ -240,6 +240,51 @@ class BookController {
 
       return res.status(200).json(book);
     } catch (err) {
+      return res.status(400).json({ error: 'Error updating book' });
+    }
+  }
+
+  async batchUpdateCover(req, res) {
+    try {
+      const books = await Book.findAll();
+      if (!books) {
+        return res.status(404).json({ error: 'No books found' });
+      }
+
+      const booksPromises = books.map(async book => {
+        book.thumbnail = `static/covers/${book.id}.png`;
+        if (fs.existsSync(`./media/book_covers/${book.isbn}.png`)) {
+          console.log('exists');
+          fs.renameSync(
+            `./media/book_covers/${book.isbn}.png`,
+            `./media/book_covers/${book.id}.png`,
+            err => {
+              if (err) console.log(`ERROR: ${err}`);
+            }
+          );
+        } else if (fs.existsSync(`./media/book_covers/${book.isbn}.jpg`)) {
+          console.log('jpg exists');
+
+          await sharp(path.resolve('media', 'book_covers', `${book.isbn}.jpg`))
+            .resize(200)
+            .jpeg({ quality: 70 })
+            .toFile(path.resolve('media', 'book_covers', `${book.id}.png`));
+
+          await fs.unlinkSync(`./media/book_covers/${book.isbn}.jpg`);
+        }
+
+        if (!fs.existsSync(`./media/book_covers/${book.id}.png`)) {
+          console.log('null thumb', book.id);
+          book.thumbnail = null;
+        }
+        return book.save();
+      });
+
+      await Promise.all(booksPromises);
+
+      return res.status(200).json({ success: true });
+    } catch (err) {
+      console.log(err);
       return res.status(400).json({ error: 'Error updating book' });
     }
   }

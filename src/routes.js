@@ -60,8 +60,8 @@ routes.put(
   BookController.update
 );
 routes.delete(`${API_BASE_URL}/books/:id`, BookController.remove);
-
 routes.post(`${API_BASE_URL}/books/bulk`, BulkInsertController.bulkStore);
+routes.get(`${API_BASE_URL}/update_covers`, BookController.batchUpdateCover);
 
 /* AUTHENTICATION */
 routes.post(`${API_BASE_URL}/auth`, AuthController.authenticate);

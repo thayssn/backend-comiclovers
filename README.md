@@ -37,3 +37,7 @@ Restore:
 ```
 cat backup.sql | docker exec -i backend-comiclovers_db_1 psql -U comiclovers
 ```
+
+## Backup images
+
+scp -r ~/projects/backendcomiclovers/backups/backupmedia comiclovers:/var/www/backend/
