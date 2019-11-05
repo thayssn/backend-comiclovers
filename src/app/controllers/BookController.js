@@ -1,12 +1,15 @@
 import sharp from 'sharp';
 import fs from 'fs';
 import path from 'path';
+import Sequelize from 'sequelize';
 import Book from '../models/Book';
 import Illustrator from '../models/Illustrator';
 import Writer from '../models/Writer';
 import Publisher from '../models/Publisher';
 import Licensor from '../models/Licensor';
 import Review from '../models/Review';
+
+const { Op } = Sequelize;
 
 class BookController {
   async list(req, res) {
@@ -22,6 +25,7 @@ class BookController {
         attributes: [
           'id',
           'isbn',
+          'isbn_10',
           'title',
           'description',
           'edition',
@@ -77,6 +81,7 @@ class BookController {
         attributes: [
           'id',
           'isbn',
+          'isbn_10',
           'title',
           'description',
           'edition',
@@ -136,7 +141,7 @@ class BookController {
     try {
       const book = await Book.findOne({
         where: {
-          isbn,
+          [Op.or]: [{ isbn }, { isbn_10: isbn }],
         },
         attributes: ['id', 'title'],
       });

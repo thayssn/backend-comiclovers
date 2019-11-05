@@ -9,6 +9,10 @@ class Book extends Model {
           allowNull: false,
           unique: true,
         },
+        isbn_10: {
+          type: Sequelize.STRING,
+          unique: true,
+        },
         title: {
           type: Sequelize.STRING,
           allowNull: false,
