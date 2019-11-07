@@ -131,6 +131,10 @@ routes.delete(
 );
 
 /* COLLECTION BOOKS */
+routes.put(
+  `${API_BASE_URL}/collections/:id/books`,
+  CollectionBooksController.update
+);
 routes.post(
   `${API_BASE_URL}/collections/:id/books`,
   CollectionBooksController.store

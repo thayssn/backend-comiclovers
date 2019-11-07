@@ -18,14 +18,42 @@ class CollectionBooksController {
         });
       }
 
-      await collection.setBooks(books);
+      await collection.addBooks(books);
 
       return res.status(201).json({
         success: true,
       });
     } catch (err) {
       console.log(err);
-      return res.status(400).json({ error: 'Error add book to collection' });
+      return res.status(400).json({ error: 'Error adding book to collection' });
+    }
+  }
+
+  async update(req, res) {
+    try {
+      const collection = await Collection.findOne({
+        where: {
+          id: req.params.id,
+          user_id: req.userId,
+        },
+      });
+
+      const { books } = req.body;
+
+      if (!collection) {
+        return res.status(404).json({
+          error: 'Collection not found',
+        });
+      }
+
+      await collection.setBooks(books);
+
+      return res.status(200).json({
+        success: true,
+      });
+    } catch (err) {
+      console.log(err);
+      return res.status(400).json({ error: 'Error adding book to collection' });
     }
   }
 
