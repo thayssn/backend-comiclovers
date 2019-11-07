@@ -17,7 +17,7 @@ module.exports = {
       .then(() => {
         return queryInterface.addColumn(
           'book_colorists', // name of Target model
-          'illustrator_id', // name of the key we're adding
+          'colorist_id', // name of the key we're adding
           {
             type: Sequelize.INTEGER,
             references: {
@@ -33,7 +33,7 @@ module.exports = {
 
   down: queryInterface => {
     return queryInterface.removeColumn('book_colorists', 'book_id').then(() => {
-      queryInterface.removeColumn('book_colorists', 'illustrator_id');
+      queryInterface.removeColumn('book_colorists', 'colorist_id');
     });
   },
 };
