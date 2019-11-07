@@ -19,6 +19,7 @@ class BookController {
       const currentLimit = req.query.limit;
       const limit = parseInt(currentLimit, 0) || 100;
       const offset = limit * (parseInt(currentPage, 0) || 0);
+      const booksCount = await Book.count();
       const books = await Book.findAll({
         limit,
         offset,
@@ -75,7 +76,7 @@ class BookController {
       if (!books.length) {
         return res.status(404).json({ error: 'No books found' });
       }
-      return res.status(200).json(books);
+      return res.status(200).json({ books, total: booksCount });
     } catch (err) {
       return res.status(400).json({ error: 'Error listing books' });
     }
