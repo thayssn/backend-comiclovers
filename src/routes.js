@@ -2,6 +2,7 @@ import { Router } from 'express';
 import UserController from './app/controllers/UserController';
 import AuthController from './app/controllers/AuthController';
 import IllustratorController from './app/controllers/IllustratorController';
+import ColoristController from './app/controllers/ColoristController';
 import PublisherController from './app/controllers/PublisherController';
 import WriterController from './app/controllers/WriterController';
 import LicensorController from './app/controllers/LicensorController';
@@ -44,6 +45,13 @@ routes.get(`${API_BASE_URL}/illustrators`, IllustratorController.list);
 routes.get(`${API_BASE_URL}/illustrators/:id`, IllustratorController.show);
 routes.put(`${API_BASE_URL}/illustrators/:id`, IllustratorController.update);
 routes.delete(`${API_BASE_URL}/illustrators/:id`, IllustratorController.remove);
+
+/* COLORIST ROUTES */
+routes.post(`${API_BASE_URL}/colorists`, ColoristController.store);
+routes.get(`${API_BASE_URL}/colorists`, ColoristController.list);
+routes.get(`${API_BASE_URL}/colorists/:id`, ColoristController.show);
+routes.put(`${API_BASE_URL}/colorists/:id`, ColoristController.update);
+routes.delete(`${API_BASE_URL}/colorists/:id`, ColoristController.remove);
 
 /* BOOKS ROUTES */
 routes.post(

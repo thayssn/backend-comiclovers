@@ -2,6 +2,7 @@ import Sequelize from 'sequelize';
 import databaseConfig from '../config/database';
 import User from '../app/models/User';
 import Illustrator from '../app/models/Illustrator';
+import Colorist from '../app/models/Colorist';
 import Writer from '../app/models/Writer';
 import Licensor from '../app/models/Licensor';
 import Publisher from '../app/models/Publisher';
@@ -12,6 +13,7 @@ import Review from '../app/models/Review';
 const models = [
   User,
   Illustrator,
+  Colorist,
   Writer,
   Licensor,
   Publisher,

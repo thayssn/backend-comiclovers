@@ -4,6 +4,7 @@ import path from 'path';
 import Sequelize from 'sequelize';
 import Book from '../models/Book';
 import Illustrator from '../models/Illustrator';
+import Colorist from '../models/Colorist';
 import Writer from '../models/Writer';
 import Publisher from '../models/Publisher';
 import Licensor from '../models/Licensor';
@@ -41,6 +42,12 @@ class BookController {
           {
             model: Illustrator,
             as: 'illustrators',
+            attributes: ['name', 'id'],
+            through: { attributes: [] },
+          },
+          {
+            model: Colorist,
+            as: 'colorists',
             attributes: ['name', 'id'],
             through: { attributes: [] },
           },
@@ -96,6 +103,12 @@ class BookController {
           {
             model: Illustrator,
             as: 'illustrators',
+            attributes: ['name', 'id'],
+            through: { attributes: [] },
+          },
+          {
+            model: Colorist,
+            as: 'colorists',
             attributes: ['name', 'id'],
             through: { attributes: [] },
           },
@@ -174,6 +187,7 @@ class BookController {
       const book = await Book.create(body);
 
       await book.setIllustrators(body.illustrators);
+      await book.setColorists(body.colorists);
       await book.setWriters(body.writers);
       await book.setPublishers(body.publishers);
       await book.setLicensors(body.licensors);
@@ -224,6 +238,7 @@ class BookController {
       await book.update(body);
 
       await book.setIllustrators(body.illustrators);
+      await book.setColorists(body.colorists);
       await book.setWriters(body.writers);
       await book.setLicensors(body.licensors);
       await book.setPublishers(body.publishers);

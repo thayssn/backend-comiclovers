@@ -58,6 +58,10 @@ class Book extends Model {
       through: 'book_illustrators',
       as: 'illustrators',
     });
+    Book.belongsToMany(models.Colorist, {
+      through: 'book_colorists',
+      as: 'colorists',
+    });
     Book.belongsToMany(models.Writer, {
       through: 'book_writers',
       as: 'writers',
