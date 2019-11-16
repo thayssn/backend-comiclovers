@@ -130,7 +130,7 @@ class UserController {
     try {
       const currentPage = req.query.page;
       const currentLimit = req.query.limit;
-      const limit = parseInt(currentLimit, 0) || 100;
+      const limit = parseInt(currentLimit, 0) || null;
       const offset = limit * (parseInt(currentPage, 0) || 0);
       let users = await User.findAll({
         limit,
