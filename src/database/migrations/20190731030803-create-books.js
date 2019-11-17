@@ -23,7 +23,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       description: {
-        type: Sequelize.TEXT('long'),
+        type: Sequelize.TEXT(),
       },
       publishing_date: {
         type: Sequelize.DATE,

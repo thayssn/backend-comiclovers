@@ -5,6 +5,15 @@ class Review extends Model {
     super.init(
       {
         rating: Sequelize.INTEGER,
+        favorite: {
+          type: Sequelize.BOOLEAN,
+          defaultValue: false,
+        },
+        has_book: {
+          type: Sequelize.BOOLEAN,
+          defaultValue: false,
+        },
+        comment: Sequelize.TEXT('long'),
       },
       {
         sequelize,

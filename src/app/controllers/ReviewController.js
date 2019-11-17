@@ -3,7 +3,8 @@ import Book from '../models/Book';
 
 class ReviewController {
   async store(req, res) {
-    const { rating } = req.body;
+    const { rating, comment, favorite, has_book } = req.body;
+    console.log(rating);
     const book_id = parseInt(req.params.id, 0);
     try {
       const book = await Book.findByPk(book_id);
@@ -18,26 +19,28 @@ class ReviewController {
           user_id: req.userId,
         },
         defaults: {
-          rating,
+          rating: rating || 0,
+          comment: comment || null,
+          favorite: favorite || false,
+          has_book: has_book || false,
         },
       });
 
       await review.setBook(book);
       await review.setUser(req.userId);
-      let incrementRating = rating;
+      let incrementRating = rating || 0;
 
       if (!wasCreated) {
-        incrementRating = rating - review.rating;
-        await review.update({
-          rating,
-        });
+        if (rating) {
+          incrementRating = rating - review.rating;
+        }
+        console.log('incrementRating', incrementRating);
+        await review.update(req.body);
       }
 
       await book.increment('total_rating', { by: incrementRating });
 
-      return res.status(201).json({
-        review,
-      });
+      return res.status(201).json(review);
     } catch (err) {
       return res.status(400).json({ error: 'Error creating review' });
     }
@@ -51,7 +54,7 @@ class ReviewController {
           book_id,
           user_id: req.userId,
         },
-        attributes: ['rating'],
+        attributes: ['rating', 'comment', 'favorite', 'has_book'],
       });
 
       if (!review) {

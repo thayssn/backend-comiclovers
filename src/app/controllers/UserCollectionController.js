@@ -50,8 +50,16 @@ class UserCollectionController {
       const user = await User.findByPk(req.userId);
 
       const userCollections = await user.getCollections({
-        order: [['title', 'ASC']],
+        order: [['updated_at', 'DESC']],
         attributes: ['id', 'title', 'thumbnail', 'type', 'updated_at'],
+        include: {
+          model: Book,
+          as: 'books',
+          attributes: ['id'],
+          through: {
+            attributes: [],
+          },
+        },
       });
 
       return res.status(200).json(userCollections);
@@ -142,6 +150,7 @@ class UserCollectionController {
         where: {
           type: 'public',
         },
+        order: [['updated_at', 'DESC']],
         attributes: ['id', 'title', 'thumbnail', 'description'],
         include: [
           {

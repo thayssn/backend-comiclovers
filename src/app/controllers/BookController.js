@@ -9,6 +9,7 @@ import Writer from '../models/Writer';
 import Publisher from '../models/Publisher';
 import Licensor from '../models/Licensor';
 import Review from '../models/Review';
+import Collection from '../models/Collection';
 
 const { Op } = Sequelize;
 
@@ -136,8 +137,16 @@ class BookController {
             as: 'reviews',
             attributes: ['rating', 'id', 'UserId'],
           },
+          {
+            model: Collection,
+            as: 'collections',
+            attributes: ['id'],
+            through: { attributes: [] },
+          },
         ],
       });
+
+      console.log(book.collections);
 
       if (!book) {
         return res.status(404).json({ error: 'Book not found' });
