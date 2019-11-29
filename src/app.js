@@ -29,6 +29,10 @@ class App {
       '/static/covers',
       express.static(path.join(__dirname, '..', 'media', 'book_covers'))
     );
+    this.server.use(
+      '/privacy',
+      express.static(path.join(__dirname, '..', 'privacy.html'))
+    );
     this.server.use(express.json());
   }
 
