@@ -83,7 +83,10 @@ routes.post(
   uploadMiddleware('profile_pics', 'image'),
   UserController.store
 );
+
+// TOKEN NEEDED
 routes.use(authMiddleware);
+
 routes.get(`${API_BASE_URL}/users`, UserController.list);
 routes.get(`${API_BASE_URL}/me/`, UserController.show);
 routes.put(
@@ -147,5 +150,10 @@ routes.delete(
 /*  REVIEWS */
 routes.get(`${API_BASE_URL}/books/:id/review`, ReviewController.show);
 routes.post(`${API_BASE_URL}/books/:id/review`, ReviewController.store);
+routes.put(`${API_BASE_URL}/books/review/favorite`, ReviewController.changeFav);
+routes.get(
+  `${API_BASE_URL}/books/review/favorites`,
+  ReviewController.showAllUserFavorites
+);
 
 module.exports = routes;

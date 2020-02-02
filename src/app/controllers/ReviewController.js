@@ -67,6 +67,90 @@ class ReviewController {
       return res.status(400).json('Error showing review');
     }
   }
+
+  async changeFav(req, res) {
+    const { favorite, book_id, user_id } = req.body;
+
+    if (!book_id || !user_id) {
+      return res.status(404).json({ error: 'Not found' });
+    }
+
+    try {
+      const review = await Review.findOne({
+        where: {
+          book_id,
+          user_id,
+        },
+      });
+
+      if (!review) {
+        return res.status(404).json({ error: 'Not found' });
+      }
+
+      const putReview = await Review.update(
+        {
+          favorite,
+        },
+        {
+          where: { book_id, user_id },
+        }
+      );
+
+      return res.status(201).json({
+        status: 201,
+        req: req.body,
+        res: putReview,
+      });
+    } catch (err) {
+      return res.status(500).json('Something went wrong');
+    }
+  }
+
+  async showAllUserFavorites(req, res) {
+    const user_id = req.userId;
+    const page = req.query.page || 1;
+    const limit = req.query.limit || 20;
+
+    const offset = limit * (page - 1);
+
+    if (!user_id) {
+      return res.status(404).json({ error: 'Not found' });
+    }
+
+    try {
+      const review = await Review.findAll({
+        where: {
+          user_id,
+          favorite: true,
+        },
+        limit,
+        offset,
+        order: [['created_at', 'DESC']],
+        include: [
+          {
+            model: Book,
+            required: true,
+          },
+        ],
+      });
+
+      if (!review) {
+        return res.status(404).json({ error: 'Not found' });
+      }
+
+      const totalData = review.length;
+      const totalPages = Math.ceil(totalData / limit);
+
+      return res.status(200).json({
+        review,
+        books: review.map(r => r.Book),
+        totalData,
+        totalPages,
+      });
+    } catch (err) {
+      return res.status(500).json('Error showing review');
+    }
+  }
 }
 
 export default new ReviewController();
