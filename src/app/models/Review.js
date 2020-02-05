@@ -13,6 +13,10 @@ class Review extends Model {
           type: Sequelize.BOOLEAN,
           defaultValue: false,
         },
+        want_book: {
+          type: Sequelize.BOOLEAN,
+          defaultValue: false,
+        },
         comment: Sequelize.TEXT('long'),
       },
       {

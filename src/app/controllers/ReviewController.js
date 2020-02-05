@@ -69,37 +69,44 @@ class ReviewController {
   }
 
   async changeFav(req, res) {
-    const { favorite, book_id, user_id } = req.body;
+    const { favorite, book_id } = req.body;
 
-    if (!book_id || !user_id) {
+    if (!book_id) {
       return res.status(404).json({ error: 'Not found' });
     }
 
     try {
-      const review = await Review.findOne({
+      const [review, created] = await Review.findOrCreate({
         where: {
           book_id,
-          user_id,
+          user_id: req.userId,
+        },
+        defaults: {
+          want_book: false,
+          has_book: false,
+          favorite,
+          rating: 0,
         },
       });
 
-      if (!review) {
-        return res.status(404).json({ error: 'Not found' });
+      let putReview = false;
+      if (!created) {
+        putReview = await Review.update(
+          {
+            favorite,
+          },
+          {
+            where: { book_id, user_id: req.userId },
+          }
+        );
       }
-
-      const putReview = await Review.update(
-        {
-          favorite,
-        },
-        {
-          where: { book_id, user_id },
-        }
-      );
 
       return res.status(201).json({
         status: 201,
         req: req.body,
-        res: putReview,
+        review,
+        created,
+        putReview,
       });
     } catch (err) {
       return res.status(500).json('Something went wrong');
@@ -149,6 +156,51 @@ class ReviewController {
       });
     } catch (err) {
       return res.status(500).json('Error showing review');
+    }
+  }
+
+  async changeWantBook(req, res) {
+    const { want_book, book_id } = req.body;
+
+    if (!book_id) {
+      return res.status(404).json({ error: 'Not found' });
+    }
+
+    try {
+      const [review, created] = await Review.findOrCreate({
+        where: {
+          book_id,
+          user_id: req.userId,
+        },
+        defaults: {
+          want_book,
+          has_book: false,
+          favorite: false,
+          rating: 0,
+        },
+      });
+
+      let putReview = false;
+      if (!created) {
+        putReview = await Review.update(
+          {
+            want_book,
+          },
+          {
+            where: { book_id, user_id: req.userId },
+          }
+        );
+      }
+
+      return res.status(201).json({
+        status: 201,
+        req: req.body,
+        review,
+        created,
+        putReview,
+      });
+    } catch (err) {
+      return res.status(500).json('Something went wrong');
     }
   }
 }

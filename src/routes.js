@@ -151,6 +151,10 @@ routes.delete(
 routes.get(`${API_BASE_URL}/books/:id/review`, ReviewController.show);
 routes.post(`${API_BASE_URL}/books/:id/review`, ReviewController.store);
 routes.put(`${API_BASE_URL}/books/review/favorite`, ReviewController.changeFav);
+routes.put(
+  `${API_BASE_URL}/books/review/wantBook`,
+  ReviewController.changeWantBook
+);
 routes.get(
   `${API_BASE_URL}/books/review/favorites`,
   ReviewController.showAllUserFavorites
