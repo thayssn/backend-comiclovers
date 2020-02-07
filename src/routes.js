@@ -159,5 +159,9 @@ routes.get(
   `${API_BASE_URL}/books/review/favorites`,
   ReviewController.showAllUserFavorites
 );
+routes.get(
+  `${API_BASE_URL}/books/review/wanted`,
+  ReviewController.showAllUserWanted
+);
 
 module.exports = routes;

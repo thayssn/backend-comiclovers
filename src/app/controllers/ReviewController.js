@@ -4,7 +4,6 @@ import Book from '../models/Book';
 class ReviewController {
   async store(req, res) {
     const { rating, comment, favorite, has_book } = req.body;
-    console.log(rating);
     const book_id = parseInt(req.params.id, 0);
     try {
       const book = await Book.findByPk(book_id);
@@ -54,7 +53,7 @@ class ReviewController {
           book_id,
           user_id: req.userId,
         },
-        attributes: ['rating', 'comment', 'favorite', 'has_book'],
+        attributes: ['rating', 'comment', 'favorite', 'has_book', 'want_book'],
       });
 
       if (!review) {
@@ -201,6 +200,52 @@ class ReviewController {
       });
     } catch (err) {
       return res.status(500).json('Something went wrong');
+    }
+  }
+
+  async showAllUserWanted(req, res) {
+    const user_id = req.userId;
+    const page = req.query.page || 1;
+    const limit = req.query.limit || 20;
+
+    const offset = limit * (page - 1);
+
+    if (!user_id) {
+      return res.status(404).json({ error: 'Not found' });
+    }
+
+    try {
+      const review = await Review.findAll({
+        where: {
+          user_id,
+          want_book: true,
+        },
+        limit,
+        offset,
+        order: [['created_at', 'DESC']],
+        include: [
+          {
+            model: Book,
+            required: true,
+          },
+        ],
+      });
+
+      if (!review) {
+        return res.status(404).json({ error: 'Not found' });
+      }
+
+      const totalData = review.length;
+      const totalPages = Math.ceil(totalData / limit);
+
+      return res.status(200).json({
+        review,
+        books: review.map(r => r.Book),
+        totalData,
+        totalPages,
+      });
+    } catch (err) {
+      return res.status(500).json('Error showing review');
     }
   }
 }
