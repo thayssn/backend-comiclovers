@@ -150,14 +150,25 @@ class UserCollectionController {
         where: {
           type: 'public',
         },
-        order: [['updated_at', 'DESC']],
         attributes: ['id', 'title', 'thumbnail', 'description'],
         include: [
           {
             model: Book,
             as: 'books',
-            attributes: ['id', 'title', 'thumbnail', 'edition'],
+            attributes: [
+              'id',
+              'title',
+              'thumbnail',
+              'edition',
+              'created_at',
+              'updated_at',
+            ],
           },
+        ],
+        order: [
+          ['books', 'created_at', 'DESC'],
+          ['created_at', 'DESC'],
+          ['updated_at', 'DESC'],
         ],
       });
       return res.status(200).json(collections);
