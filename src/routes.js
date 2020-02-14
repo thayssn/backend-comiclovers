@@ -164,4 +164,11 @@ routes.get(
   ReviewController.showAllUserWanted
 );
 
+// BOOKS
+routes.post(
+  `${API_BASE_URL}/userbook/store`,
+  uploadMiddleware('book_covers', 'image'),
+  BookController.userBookStore
+);
+
 module.exports = routes;

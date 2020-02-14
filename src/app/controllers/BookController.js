@@ -211,6 +211,34 @@ class BookController {
     }
   }
 
+  async userBookStore(req, res) {
+    try {
+      const { title, isbn, pages, publishing_date, price } = req.body;
+      // eslint-disable-next-line radix
+      const formatttedPages = pages ? parseInt(pages) || 0 : 0;
+      const formattedDate = publishing_date
+        ? new Date(publishing_date) || new Date().getDate()
+        : new Date().getDate();
+
+      const book = await Book.create({
+        title,
+        isbn,
+        pages: formatttedPages,
+        publishing_date: formattedDate,
+        price,
+        total_rating: 0,
+        total_favorites: 0,
+      });
+
+      return res.status(201).json({
+        success: true,
+        book: { id: book.id, title: book.title, isbn: book.isbn },
+      });
+    } catch (err) {
+      return res.status(400).json({ error: 'Error creating book' });
+    }
+  }
+
   async update(req, res) {
     const { id } = req.params;
 
