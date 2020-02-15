@@ -45,6 +45,11 @@ class Book extends Model {
           type: Sequelize.INTEGER,
           defaultValue: 0,
         },
+        status: {
+          type: Sequelize.ENUM,
+          values: ['Pendente', 'Aprovado', 'Desaprovado'],
+          defaultValue: 'Pendente',
+        },
       },
       {
         sequelize,
