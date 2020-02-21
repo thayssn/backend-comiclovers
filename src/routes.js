@@ -165,10 +165,6 @@ routes.get(
 );
 
 // BOOKS
-routes.post(
-  `${API_BASE_URL}/userbook/store`,
-  uploadMiddleware('book_covers', 'image'),
-  BookController.userBookStore
-);
+routes.post(`${API_BASE_URL}/userbook/store`, BookController.userBookStore);
 
 module.exports = routes;
