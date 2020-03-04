@@ -146,8 +146,6 @@ class BookController {
         ],
       });
 
-      console.log(book.collections);
-
       if (!book) {
         return res.status(404).json({ error: 'Book not found' });
       }
@@ -174,7 +172,82 @@ class BookController {
       }
       return res.status(200).json(book);
     } catch (err) {
-      return res.status(400).json({ error: 'Error trying to find book' });
+      return res
+        .status(400)
+        .json({ error: 'Error trying to find book by isbn' });
+    }
+  }
+
+  async findByTerm(req, res) {
+    try {
+      const { searchTerm } = req.query;
+      const currentPage = req.query.page;
+      const currentLimit = req.query.limit;
+      const limit = parseInt(currentLimit, 0) || null;
+      const offset = limit * (parseInt(currentPage, 0) || 0);
+      const booksCount = await Book.count();
+      const books = await Book.findAll({
+        where: {
+          [Op.or]: [{ title: { [Op.iLike]: `%${searchTerm}%` } }],
+        },
+        limit,
+        offset,
+        order: [['updated_at', 'DESC']],
+        attributes: [
+          'id',
+          'isbn',
+          'isbn_10',
+          'title',
+          'description',
+          'edition',
+          'pages',
+          'price',
+          'thumbnail',
+          'format',
+          'total_rating',
+          'publishing_date',
+          'updated_at',
+        ],
+        include: [
+          {
+            model: Illustrator,
+            as: 'illustrators',
+            attributes: ['name', 'id'],
+            through: { attributes: [] },
+          },
+          {
+            model: Colorist,
+            as: 'colorists',
+            attributes: ['name', 'id'],
+            through: { attributes: [] },
+          },
+          {
+            model: Writer,
+            as: 'writers',
+            attributes: ['name', 'id'],
+            through: { attributes: [] },
+          },
+          {
+            model: Publisher,
+            as: 'publishers',
+            attributes: ['name', 'id'],
+            through: { attributes: [] },
+          },
+          {
+            model: Licensor,
+            as: 'licensors',
+            attributes: ['name', 'id'],
+            through: { attributes: [] },
+          },
+        ],
+      });
+
+      if (!books.length) {
+        return res.status(404).json({ error: 'No books found' });
+      }
+      return res.status(200).json({ books, total: booksCount });
+    } catch (err) {
+      return res.status(400).json({ error: 'Error finding books by terms' });
     }
   }
 
