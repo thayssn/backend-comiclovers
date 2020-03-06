@@ -12,5 +12,8 @@
       "autoFix": true
     }
   ],
-  "editor.maxTokenizationLineLength": 80000
+  "editor.maxTokenizationLineLength": 80000,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
 }
