@@ -242,9 +242,6 @@ class BookController {
         ],
       });
 
-      if (!books.length) {
-        return res.status(404).json({ error: 'No books found' });
-      }
       return res.status(200).json({ books, total: booksCount });
     } catch (err) {
       return res.status(400).json({ error: 'Error finding books by terms' });
