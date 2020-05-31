@@ -181,10 +181,10 @@ class BookController {
   async findByTerm(req, res) {
     try {
       const { searchTerm } = req.query;
-      const currentPage = req.query.page;
+      const currentPage = parseInt(req.query.page, 0);
       const currentLimit = req.query.limit;
-      const limit = parseInt(currentLimit, 0) || null;
-      const offset = limit * (parseInt(currentPage, 0) || 0);
+      const limit = parseInt(currentLimit, 0) || 30;
+      const offset = limit * (currentPage || 0);
       const booksCount = await Book.count();
       const books = await Book.findAll({
         where: {
@@ -242,7 +242,12 @@ class BookController {
         ],
       });
 
-      return res.status(200).json({ books, total: booksCount });
+      return res.status(200).json({
+        books,
+        total: booksCount,
+        pages: Math.round(booksCount / limit),
+        currentPage: currentPage || 0,
+      });
     } catch (err) {
       return res.status(400).json({ error: 'Error finding books by terms' });
     }
