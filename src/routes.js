@@ -53,23 +53,6 @@ routes.get(`${API_BASE_URL}/colorists/:id`, ColoristController.show);
 routes.put(`${API_BASE_URL}/colorists/:id`, ColoristController.update);
 routes.delete(`${API_BASE_URL}/colorists/:id`, ColoristController.remove);
 
-/* BOOKS ROUTES */
-routes.post(
-  `${API_BASE_URL}/books`,
-  uploadMiddleware('book_covers', 'image'),
-  BookController.store
-);
-
-routes.get(`${API_BASE_URL}/books/search/`, BookController.findByTerm);
-routes.get(`${API_BASE_URL}/books/`, BookController.list);
-routes.get(`${API_BASE_URL}/books/:id`, BookController.show);
-routes.get(`${API_BASE_URL}/books/isbn/:isbn`, BookController.findByISBN);
-routes.put(
-  `${API_BASE_URL}/books/:id`,
-  uploadMiddleware('book_covers', 'image'),
-  BookController.update
-);
-routes.delete(`${API_BASE_URL}/books/:id`, BookController.remove);
 routes.post(`${API_BASE_URL}/books/bulk`, BulkInsertController.bulkStore);
 routes.get(`${API_BASE_URL}/update_covers`, BookController.batchUpdateCover);
 
@@ -89,8 +72,27 @@ routes.post(
 // TOKEN NEEDED
 routes.use(authMiddleware);
 
+/* BOOKS ROUTES */
+routes.post(
+  `${API_BASE_URL}/books`,
+  uploadMiddleware('book_covers', 'image'),
+  BookController.store
+);
+routes.get(`${API_BASE_URL}/books/search/`, BookController.findByTerm);
+routes.get(`${API_BASE_URL}/books/`, BookController.list);
+routes.get(`${API_BASE_URL}/books/:id`, BookController.show);
+routes.get(`${API_BASE_URL}/books/isbn/:isbn`, BookController.findByISBN);
+routes.put(
+  `${API_BASE_URL}/books/:id`,
+  uploadMiddleware('book_covers', 'image'),
+  BookController.update
+);
+routes.delete(`${API_BASE_URL}/books/:id`, BookController.remove);
+
+/* USER ROUTES */
 routes.get(`${API_BASE_URL}/users`, UserController.list);
 routes.get(`${API_BASE_URL}/me/`, UserController.show);
+routes.get(`${API_BASE_URL}/me/books/`, BookController.userBookList);
 routes.put(
   `${API_BASE_URL}/me`,
   uploadMiddleware('profile_pics', 'image'),
@@ -123,6 +125,7 @@ routes.post(
   uploadMiddleware('collection_covers', 'image'),
   UserCollectionController.store
 );
+
 routes.get(`${API_BASE_URL}/collections/`, UserCollectionController.list);
 routes.get(`${API_BASE_URL}/collections/:id`, UserCollectionController.show);
 routes.put(
@@ -130,6 +133,7 @@ routes.put(
   uploadMiddleware('collection_covers', 'image'),
   UserCollectionController.update
 );
+
 routes.delete(
   `${API_BASE_URL}/collections/:id`,
   UserCollectionController.remove
@@ -165,8 +169,5 @@ routes.get(
   `${API_BASE_URL}/books/review/wanted`,
   ReviewController.showAllUserWanted
 );
-
-// BOOKS
-routes.post(`${API_BASE_URL}/userbook/store`, BookController.userBookStore);
 
 module.exports = routes;

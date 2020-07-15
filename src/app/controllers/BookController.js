@@ -18,10 +18,15 @@ class BookController {
     try {
       const currentPage = req.query.page;
       const currentLimit = req.query.limit;
+      const whereParams = req.query.whereParams || {};
       const limit = parseInt(currentLimit, 0) || null;
       const offset = limit * (parseInt(currentPage, 0) || 0);
       const booksCount = await Book.count();
+
+      console.log(whereParams);
+
       const books = await Book.findAll({
+        where: JSON.parse(whereParams),
         limit,
         offset,
         order: [['updated_at', 'DESC']],
@@ -39,39 +44,40 @@ class BookController {
           'total_rating',
           'publishing_date',
           'updated_at',
+          'status',
         ],
-        include: [
-          {
-            model: Illustrator,
-            as: 'illustrators',
-            attributes: ['name', 'id'],
-            through: { attributes: [] },
-          },
-          {
-            model: Colorist,
-            as: 'colorists',
-            attributes: ['name', 'id'],
-            through: { attributes: [] },
-          },
-          {
-            model: Writer,
-            as: 'writers',
-            attributes: ['name', 'id'],
-            through: { attributes: [] },
-          },
-          {
-            model: Publisher,
-            as: 'publishers',
-            attributes: ['name', 'id'],
-            through: { attributes: [] },
-          },
-          {
-            model: Licensor,
-            as: 'licensors',
-            attributes: ['name', 'id'],
-            through: { attributes: [] },
-          },
-        ],
+        // include: [
+        //   {
+        //     model: Illustrator,
+        //     as: 'illustrators',
+        //     attributes: ['name', 'id'],
+        //     through: { attributes: [] },
+        //   },
+        //   {
+        //     model: Colorist,
+        //     as: 'colorists',
+        //     attributes: ['name', 'id'],
+        //     through: { attributes: [] },
+        //   },
+        //   {
+        //     model: Writer,
+        //     as: 'writers',
+        //     attributes: ['name', 'id'],
+        //     through: { attributes: [] },
+        //   },
+        //   {
+        //     model: Publisher,
+        //     as: 'publishers',
+        //     attributes: ['name', 'id'],
+        //     through: { attributes: [] },
+        //   },
+        //   {
+        //     model: Licensor,
+        //     as: 'licensors',
+        //     attributes: ['name', 'id'],
+        //     through: { attributes: [] },
+        //   },
+        // ],
       });
 
       if (!books.length) {
@@ -79,6 +85,7 @@ class BookController {
       }
       return res.status(200).json({ books, total: booksCount });
     } catch (err) {
+      console.log(err);
       return res.status(400).json({ error: 'Error listing books' });
     }
   }
@@ -100,6 +107,7 @@ class BookController {
           'format',
           'total_rating',
           'publishing_date',
+          'status',
         ],
         include: [
           {
@@ -164,7 +172,7 @@ class BookController {
         where: {
           [Op.or]: [{ isbn }, { isbn_10: isbn }],
         },
-        attributes: ['id', 'title'],
+        attributes: ['id', 'title', 'status'],
       });
 
       if (!book) {
@@ -207,6 +215,7 @@ class BookController {
           'total_rating',
           'publishing_date',
           'updated_at',
+          'status',
         ],
         include: [
           {
@@ -277,6 +286,10 @@ class BookController {
         book.save();
       }
 
+      if (req.userId) {
+        await book.setUser(req.userId);
+      }
+
       return res.status(201).json({
         success: true,
         book: { id: book.id, title: book.title, isbn: book.isbn },
@@ -286,34 +299,24 @@ class BookController {
     }
   }
 
-  async userBookStore(req, res) {
+  async userBookList(req, res) {
     try {
-      const { title, isbn, pages, publishing_date, price } = req.body;
-      console.log('req body', req.body);
-      // eslint-disable-next-line radix
-      const formatttedPages = pages ? parseInt(pages) || 0 : 0;
-      const formattedPrice = price ? price.replace(',', '.') : '0';
-      const formattedDate = publishing_date
-        ? new Date(publishing_date) || new Date().getDate()
-        : new Date().getDate();
-
-      const book = await Book.create({
-        title,
-        isbn,
-        pages: formatttedPages,
-        publishing_date: formattedDate,
-        price: formattedPrice,
-        total_rating: 0,
-        total_favorites: 0,
+      const books = await Book.findAll({
+        where: {
+          user_id: req.userId,
+        },
+        attributes: ['id', 'title', 'status', 'thumbnail'],
       });
 
-      return res.status(201).json({
-        success: true,
-        book: { id: book.id, title: book.title, isbn: book.isbn },
-      });
+      if (!books.length) {
+        return res.status(404).json({ error: 'No books found' });
+      }
+      return res.status(200).json(books);
     } catch (err) {
-      console.log('Book CREATE error', err);
-      return res.status(400).json({ error: 'Error creating book' });
+      console.log(err);
+      return res
+        .status(400)
+        .json({ error: 'Error trying to find books for this user' });
     }
   }
 

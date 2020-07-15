@@ -59,6 +59,8 @@ class Book extends Model {
   }
 
   static associate(models) {
+    this.belongsTo(models.User);
+
     Book.belongsToMany(models.Illustrator, {
       through: 'book_illustrators',
       as: 'illustrators',

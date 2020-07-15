@@ -35,6 +35,10 @@ class User extends Model {
     User.hasMany(models.Review, {
       as: 'reviews',
     });
+
+    User.hasMany(models.Book, {
+      as: 'books',
+    });
   }
 
   verifyPassword(password) {
