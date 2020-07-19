@@ -87,6 +87,7 @@ routes.put(
   uploadMiddleware('book_covers', 'image'),
   BookController.update
 );
+routes.put(`${API_BASE_URL}/books/:id/status/`, BookController.updateStatus);
 routes.delete(`${API_BASE_URL}/books/:id`, BookController.remove);
 
 /* USER ROUTES */

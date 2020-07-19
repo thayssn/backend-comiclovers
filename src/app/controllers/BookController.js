@@ -18,12 +18,9 @@ class BookController {
     try {
       const currentPage = req.query.page;
       const currentLimit = req.query.limit;
-      const whereParams = req.query.whereParams || {};
+      const whereParams = req.query.whereParams || '{}';
       const limit = parseInt(currentLimit, 0) || null;
       const offset = limit * (parseInt(currentPage, 0) || 0);
-      const booksCount = await Book.count();
-
-      console.log(whereParams);
 
       const books = await Book.findAll({
         where: JSON.parse(whereParams),
@@ -80,10 +77,7 @@ class BookController {
         // ],
       });
 
-      if (!books.length) {
-        return res.status(404).json({ error: 'No books found' });
-      }
-      return res.status(200).json({ books, total: booksCount });
+      return res.status(200).json({ books, total: books.length });
     } catch (err) {
       console.log(err);
       return res.status(400).json({ error: 'Error listing books' });
@@ -193,7 +187,6 @@ class BookController {
       const currentLimit = req.query.limit;
       const limit = parseInt(currentLimit, 0) || 30;
       const offset = limit * (currentPage || 0);
-      const booksCount = await Book.count();
       const books = await Book.findAll({
         where: {
           [Op.or]: [{ title: { [Op.iLike]: `%${searchTerm}%` } }],
@@ -253,8 +246,8 @@ class BookController {
 
       return res.status(200).json({
         books,
-        total: booksCount,
-        pages: Math.round(booksCount / limit),
+        total: books.length,
+        pages: Math.round(books.length / limit),
         currentPage: currentPage || 0,
       });
     } catch (err) {
@@ -317,6 +310,25 @@ class BookController {
       return res
         .status(400)
         .json({ error: 'Error trying to find books for this user' });
+    }
+  }
+
+  async updateStatus(req, res) {
+    const { id } = req.params;
+    try {
+      const { status } = req.body;
+      const book = await Book.findByPk(id);
+
+      if (!book) {
+        return res.status(404).json({ error: 'Book not found' });
+      }
+
+      await book.update({ status });
+
+      return res.status(200).json(book);
+    } catch (err) {
+      console.log(err);
+      return res.status(400).json({ error: 'Error updating book status' });
     }
   }
 
