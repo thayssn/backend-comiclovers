@@ -50,6 +50,11 @@ class Book extends Model {
           values: ['Pendente', 'Aprovado', 'Desaprovado'],
           defaultValue: 'Pendente',
         },
+        type: {
+          type: Sequelize.ENUM,
+          values: ['Quadrinho', 'Mangá', 'Livro'],
+          defaultValue: 'Quadrinho',
+        },
       },
       {
         sequelize,

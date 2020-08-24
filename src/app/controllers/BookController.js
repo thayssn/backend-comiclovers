@@ -42,6 +42,7 @@ class BookController {
           'publishing_date',
           'updated_at',
           'status',
+          'type',
         ],
         // include: [
         //   {
@@ -102,6 +103,7 @@ class BookController {
           'total_rating',
           'publishing_date',
           'status',
+          'type',
         ],
         include: [
           {
@@ -166,7 +168,7 @@ class BookController {
         where: {
           [Op.or]: [{ isbn }, { isbn_10: isbn }],
         },
-        attributes: ['id', 'title', 'status'],
+        attributes: ['id', 'title', 'status', 'type'],
       });
 
       if (!book) {
@@ -209,6 +211,7 @@ class BookController {
           'publishing_date',
           'updated_at',
           'status',
+          'type',
         ],
         include: [
           {
@@ -258,6 +261,8 @@ class BookController {
   async store(req, res) {
     const body = JSON.parse(req.body.jsonPayload);
 
+    console.log(body.type);
+
     try {
       const book = await Book.create(body);
 
@@ -285,7 +290,12 @@ class BookController {
 
       return res.status(201).json({
         success: true,
-        book: { id: book.id, title: book.title, isbn: book.isbn },
+        book: {
+          id: book.id,
+          title: book.title,
+          isbn: book.isbn,
+          type: book.type,
+        },
       });
     } catch (err) {
       return res.status(400).json({ error: 'Error creating book' });
@@ -298,7 +308,7 @@ class BookController {
         where: {
           user_id: req.userId,
         },
-        attributes: ['id', 'title', 'status', 'thumbnail'],
+        attributes: ['id', 'title', 'status', 'type', 'thumbnail'],
       });
 
       if (!books.length) {
