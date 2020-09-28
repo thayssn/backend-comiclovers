@@ -83,6 +83,17 @@ class UserController {
 
       const user = await User.findByPk(req.userId);
 
+      if (req.file) {
+        user.profile_picture = `static/users/${user.id}.png`;
+        await sharp(req.file.path)
+          .resize(200)
+          .jpeg({ quality: 70 })
+          .toFile(path.resolve(req.file.destination, `${user.id}.png`));
+
+        fs.unlinkSync(req.file.path);
+        user.save();
+      }
+
       if (newEmail !== user.email) {
         const userExists = await User.findOne({
           where: { email: newEmail },
